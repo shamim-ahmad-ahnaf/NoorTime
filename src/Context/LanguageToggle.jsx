@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLanguage } from '../Context/LanguageContext'; // Adjust the import path as necessary
+import { useLanguage } from '../Context/LanguageContext';
 
 function LanguageToggle() {
   const { language, toggleLanguage } = useLanguage();
@@ -9,7 +9,7 @@ function LanguageToggle() {
       onClick={toggleLanguage}
       className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700"
     >
-      {language === 'en' ? 'Switch to বাংলা' : 'Switch to English'}
+      {language === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
     </button>
   );
 }

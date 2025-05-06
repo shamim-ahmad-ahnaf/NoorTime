@@ -9,7 +9,7 @@ function About() {
     <div className="bg-gradient-to-b from-green-50 to-white py-10 px-4 min-h-screen">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-4xl font-bold text-green-700 mb-6 text-center">
-          {language === 'bn' ? 'আমাদের সম্পর্কে' : 'About Us'}
+          {language === 'bn' ? 'আমাদের সম্পর্কে' : 'About App'}
         </h2>
         <p className="text-gray-700 text-lg leading-relaxed mb-6 text-justify">
           {language === 'bn'

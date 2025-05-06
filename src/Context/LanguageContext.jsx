@@ -5,10 +5,10 @@ const LanguageContext = createContext();
 
 // Language provider to manage the state
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState('en'); // Default language is English
+  const [language, setLanguage] = useState('bn'); // ✅ Default language is Bangla
 
   const toggleLanguage = () => {
-    setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'bn' : 'en'));
+    setLanguage((prevLanguage) => (prevLanguage === 'bn' ? 'en' : 'bn'));
   };
 
   return (

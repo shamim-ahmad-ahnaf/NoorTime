@@ -1,6 +1,72 @@
 import React from 'react';
 import { useLanguage } from '../Context/LanguageContext';
-import { FaPrayingHands, FaBookOpen, FaRegClock } from 'react-icons/fa'; // React Icons from Font Awesome
+import {
+  FaPrayingHands,
+  FaBookOpen,
+  FaRegClock,
+  FaQuran,
+  FaCog,
+  FaInfoCircle,
+} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
+// Features data
+const features = [
+  {
+    icon: <FaPrayingHands className="text-4xl text-green-600" />,
+    title: { bn: 'নামাজের সময়সূচী', en: 'Prayer Times' },
+    desc: {
+      bn: 'প্রতিদিনের সঠিক নামাজের সময় জানতে এখনই দেখুন।',
+      en: 'View accurate prayer times for each day.',
+    },
+    path: '/prayer',
+  },
+  {
+    icon: <FaBookOpen className="text-4xl text-green-600" />,
+    title: { bn: 'দোয়া', en: 'Duas' },
+    desc: {
+      bn: 'প্রয়োজনীয় দোয়া পড়ুন ও মুখস্থ করুন এবং সঠিকভাবে আমল করুন।',
+      en: 'Explore and memorize essential duas.',
+    },
+    path: '/dua',
+  },
+  {
+    icon: <FaQuran className="text-4xl text-green-600" />,
+    title: { bn: 'সূরা', en: 'Surahs' },
+    desc: {
+      bn: 'কুরআনের বিভিন্ন সূরা পড়তে ও শিখতে পারো।',
+      en: "Read and learn Surahs from the Qur'an.",
+    },
+    path: '/surah',
+  },
+  {
+    icon: <FaRegClock className="text-4xl text-green-600" />,
+    title: { bn: 'নামাজ ট্র্যাকার', en: 'Prayer Tracker' },
+    desc: {
+      bn: 'নিয়মিত নামাজ পড়ার ট্র্যাক রাখতে সাহায্য করে।',
+      en: 'Keep track of your daily prayers easily.',
+    },
+    path: '/tracker',
+  },
+  {
+    icon: <FaCog className="text-4xl text-green-600" />,
+    title: { bn: 'সেটিংস', en: 'Settings' },
+    desc: {
+      bn: 'আপনার পছন্দ অনুযায়ী অ্যাপ সেটিংস কাস্টমাইজ করুন।',
+      en: 'Customize app settings to your preference.',
+    },
+    path: '/settings',
+  },
+  {
+    icon: <FaInfoCircle className="text-4xl text-green-600" />,
+    title: { bn: 'আমাদের সম্পর্কে', en: 'About App' },
+    desc: {
+      bn: 'নূরটাইম সম্পর্কে জানুন এবং আমাদের লক্ষ্য দেখুন।',
+      en: 'Learn about NoorTime and our mission.',
+    },
+    path: '/about',
+  },
+];
 
 function Home() {
   const { language } = useLanguage();
@@ -8,9 +74,8 @@ function Home() {
   return (
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-16">
       <div className="max-w-7xl mx-auto text-center space-y-8">
-        {/* Heading */}
         <h2 className="text-4xl font-extrabold text-green-600">
-          {language === 'bn' ? 'স্বাগতম নূরটাইমে' : 'Welcome to NoorTime'}
+          {language === 'bn' ? 'স্বাগতম নূরটাইমে' : 'Welcome to DeenZone'}
         </h2>
         <p className="text-xl text-gray-600">
           {language === 'bn'
@@ -20,60 +85,35 @@ function Home() {
 
         {/* Features Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {/* Feature 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
-            <div className="flex items-center justify-center mb-4">
-              <FaPrayingHands className="text-4xl text-green-600" />
-            </div>
-            <h3 className="text-2xl font-semibold text-green-600 mb-4">
-              {language === 'bn' ? 'নামাজের সময়সূচী' : 'Prayer Times'}
-            </h3>
-            <p className="text-lg text-gray-700">
-              {language === 'bn'
-                ? 'নূরটাইম আপনাকে সঠিক নামাজের সময়সূচী প্রদান করে, যাতে আপনি আপনার প্রতিদিনের ইবাদত সঠিকভাবে করতে পারেন।'
-                : 'NoorTime provides accurate prayer schedules to help you perform your daily prayers on time.'}
-            </p>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
-            <div className="flex items-center justify-center mb-4">
-              <FaBookOpen className="text-4xl text-green-600" />
-            </div>
-            <h3 className="text-2xl font-semibold text-green-600 mb-4">
-              {language === 'bn' ? 'দোয়া' : 'Duas'}
-            </h3>
-            <p className="text-lg text-gray-700">
-              {language === 'bn'
-                ? 'আমরা বিভিন্ন গুরুত্বপূর্ণ দোয়া আপনাকে প্রদান করি, যাতে আপনি প্রতিদিনের ইবাদত সঠিকভাবে করতে পারেন।'
-                : 'We provide a collection of essential duas to enhance your worship and spiritual growth.'}
-            </p>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
-            <div className="flex items-center justify-center mb-4">
-              <FaRegClock className="text-4xl text-green-600" />
-            </div>
-            <h3 className="text-2xl font-semibold text-green-600 mb-4">
-              {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}
-            </h3>
-            <p className="text-lg text-gray-700">
-              {language === 'bn'
-                ? 'নূরটাইম নামাজ ট্র্যাকিং সিস্টেম দিয়ে আপনার নামাজের সঠিক সময় এবং নিয়মিত ইবাদত নিশ্চিত করতে সাহায্য করবে।'
-                : 'NoorTime helps you track your prayers and ensures you stay consistent with your worship.'}
-            </p>
-          </div>
+          {features.map((feature, idx) => (
+           <Link to={feature.path} key={idx} className="block">
+           <div className="bg-gradient-to-b from-green-100 to-white border-2 border-green-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+             <div className="flex items-center justify-center mb-4">
+               {feature.icon}
+             </div>
+             <h3 className="text-2xl font-semibold text-green-600 mb-4">
+               {language === 'bn' ? feature.title.bn : feature.title.en}
+             </h3>
+             <p className="text-lg text-gray-700 mb-4">
+               {language === 'bn' ? feature.desc.bn : feature.desc.en}
+             </p>
+             <div className="text-sm font-medium text-green-600 hover:underline">
+               {language === 'bn' ? 'আরও জানুন' : 'Learn More'}
+             </div>
+           </div>
+         </Link>
+         
+          ))}
         </div>
 
         {/* Call to Action */}
         <div className="mt-12">
-          <a
-            href="/prayer"
+          <Link
+            to="/prayer"
             className="bg-green-600 text-white py-3 px-8 text-xl font-semibold rounded-lg hover:bg-green-500 transition duration-300"
           >
             {language === 'bn' ? 'নামাজের সময় দেখুন' : 'View Prayer Times'}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

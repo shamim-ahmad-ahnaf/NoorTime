@@ -36,7 +36,7 @@ function Header() {
             {language === 'bn' ? 'হোম' : 'Home'}
           </Link>
           <Link to="/about" className="text-lg hover:text-gray-300">
-            {language === 'bn' ? 'আমাদের সম্পর্কে' : 'About Us'}
+            {language === 'bn' ? 'আমাদের সম্পর্কে' : 'About App'}
           </Link>
           <Link to="/prayer" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}

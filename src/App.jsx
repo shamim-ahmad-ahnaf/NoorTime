@@ -10,6 +10,7 @@ import About from './Components/About';
 import { LanguageProvider } from './Context/LanguageContext';
 import LanguageToggle from './Context/LanguageToggle';
 import Home from './Components/Home';
+import Settings from './Components/Settings';
 
 function App() {
   return (
@@ -17,26 +18,17 @@ function App() {
       <Router>
         <div className="min-h-screen bg-gray-100 flex flex-col">
           <Header />
-          <Routes>
-            {/* ✅ Home route */}
-            <Route path="/" element={<Home />} />
-
-            {/* ✅ Other routes */}
-            <Route
-              path="*"
-              element={
-                <div className="flex-1 flex flex-col items-center justify-start p-4 w-full">
-                  <Routes>
-                    <Route path="/prayer" element={<PrayerTime />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/surah" element={<SurahSection />} />
-                    <Route path="/tracker" element={<PrayerTracker />} />
-                    <Route path="/dua" element={<DuaSection />} />
-                  </Routes>
-                </div>
-              }
-            />
-          </Routes>
+          <div className="flex-1">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/prayer" element={<PrayerTime />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/surah" element={<SurahSection />} />
+              <Route path="/tracker" element={<PrayerTracker />} />
+              <Route path="/dua" element={<DuaSection />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </div>
           <div className="p-4 flex justify-center">
             <LanguageToggle />
           </div>
