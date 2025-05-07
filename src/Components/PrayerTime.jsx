@@ -36,6 +36,9 @@ function PrayerTime() {
   const [azanPlayed, setAzanPlayed] = useState(false);
   const audioRef = useRef(null);
 
+  // 🕒 Clock & Date State
+  const [clock, setClock] = useState(new Date());
+
   const requestNotificationPermission = () => {
     if ('Notification' in window && Notification.permission !== 'granted') {
       Notification.requestPermission();
@@ -122,13 +125,39 @@ function PrayerTime() {
   useEffect(() => {
     requestNotificationPermission();
     updatePrayerTimes();
-    const interval = setInterval(updatePrayerTimes, 30000); // Check every 30s
+    const interval = setInterval(updatePrayerTimes, 30000);
 
     return () => clearInterval(interval);
   }, [language]);
 
+  // ⏰ Clock & Date updater
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setClock(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formattedTime = clock.toLocaleTimeString(language === 'bn' ? 'bn-BD' : 'en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+
+  const formattedDate = clock.toLocaleDateString(language === 'bn' ? 'bn-BD' : 'en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white rounded-2xl  shadow-lg p-6 mt-20 w-full max-w-md mx-auto">
+    <div className="bg-gradient-to-b from-green-50 to-white rounded-2xl shadow-lg p-6 mt-14 w-full max-w-3xl mx-auto">
+      <div className="text-center mb-4">
+        <div className="text-2xl font-bold text-gray-800">{formattedTime}</div>
+        <div className="text-sm text-gray-500">{formattedDate}</div>
+      </div>
+
       <h2 className="text-3xl font-extrabold text-green-600 mb-6 text-center flex items-center justify-center gap-2">
         <FaClock className="text-green-500" />
         {language === 'bn' ? 'আজকের নামাজের সময়' : "Today's Prayer Times"}

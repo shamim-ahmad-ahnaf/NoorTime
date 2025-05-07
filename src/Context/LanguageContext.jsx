@@ -1,14 +1,22 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
-// Language context creation
 const LanguageContext = createContext();
 
-// Language provider to manage the state
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState('bn'); // ✅ Default language is Bangla
+  const [language, setLanguage] = useState('bn'); // default fallback
+
+  // Load saved language from localStorage when component mounts
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('deen-language');
+    if (savedLanguage) {
+      setLanguage(savedLanguage);
+    }
+  }, []);
 
   const toggleLanguage = () => {
-    setLanguage((prevLanguage) => (prevLanguage === 'bn' ? 'en' : 'bn'));
+    const newLang = language === 'bn' ? 'en' : 'bn';
+    setLanguage(newLang);
+    localStorage.setItem('deen-language', newLang); // Save to localStorage
   };
 
   return (
@@ -18,5 +26,4 @@ export function LanguageProvider({ children }) {
   );
 }
 
-// Custom hook to use language context
 export const useLanguage = () => useContext(LanguageContext);

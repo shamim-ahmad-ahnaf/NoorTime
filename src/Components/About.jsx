@@ -6,14 +6,14 @@ function About() {
   const { language } = useLanguage();
 
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white py-10 px-4 min-h-screen">
+    <div className="bg-gradient-to-b from-green-50 to-white py-10 px-4 min-h-screen mt-10">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-4xl font-bold text-green-700 mb-6 text-center">
-          {language === 'bn' ? 'আমাদের সম্পর্কে' : 'About App'}
+          {language === 'bn' ? 'দ্বীনযুন সম্পর্কে' : 'About DeenZone'}
         </h2>
         <p className="text-gray-700 text-lg leading-relaxed mb-6 text-justify">
           {language === 'bn'
-            ? 'নূরটাইম একটি আধুনিক ও ব্যবহারবান্ধব ইসলামী অ্যাপ্লিকেশন, যা মুসলিমদের জন্য নামাজের সময়সূচী, কুরআনের সূরা, দোয়া ও নামাজ ট্র্যাকার সরবরাহ করে। আমরা বিশ্বাস করি প্রযুক্তিকে কাজে লাগিয়ে ইবাদতকে আরও সহজ ও সচেতনভাবে পালন করা সম্ভব।'
+            ? 'দ্বীনযুন একটি আধুনিক ও ব্যবহারবান্ধব ইসলামী অ্যাপ্লিকেশন, যা মুসলিমদের জন্য নামাজের সময়সূচী, কুরআনের সূরা, দোয়া ও নামাজ ট্র্যাকার সরবরাহ করে। আমরা বিশ্বাস করি প্রযুক্তিকে কাজে লাগিয়ে ইবাদতকে আরও সহজ ও সচেতনভাবে পালন করা সম্ভব।'
             : 'NoorTime is a modern, user-friendly Islamic application that offers prayer schedules, Qur’anic surahs, duas, and a prayer tracker. We believe that technology can be a powerful tool in making worship easier and more mindful.'}
         </p>
 

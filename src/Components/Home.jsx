@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
 import {
   FaPrayingHands,
@@ -59,10 +59,10 @@ const features = [
   },
   {
     icon: <FaInfoCircle className="text-4xl text-green-600" />,
-    title: { bn: 'আমাদের সম্পর্কে', en: 'About App' },
+    title: { bn: 'দ্বীনযুন সম্পর্কে', en: 'About DeenZone' },
     desc: {
-      bn: 'নূরটাইম সম্পর্কে জানুন এবং আমাদের লক্ষ্য দেখুন।',
-      en: 'Learn about NoorTime and our mission.',
+      bn: 'দ্বীনযুন সম্পর্কে জানুন এবং আমাদের লক্ষ্য দেখুন।',
+      en: 'Learn about DeenZone and our mission.',
     },
     path: '/about',
   },
@@ -71,38 +71,62 @@ const features = [
 function Home() {
   const { language } = useLanguage();
 
+  // Time and Date States
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeString = currentTime.toLocaleTimeString();
+  const dateString = currentTime.toLocaleDateString('bn-BD', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-16">
       <div className="max-w-7xl mx-auto text-center space-y-8">
         <h2 className="text-4xl font-extrabold text-green-600">
-          {language === 'bn' ? 'স্বাগতম নূরটাইমে' : 'Welcome to DeenZone'}
+          {language === 'bn' ? 'দ্বীনযুনে আপনাকে স্বাগতম' : 'Welcome to DeenZone'}
         </h2>
-        <p className="text-xl text-gray-600">
-          {language === 'bn'
-            ? 'নূরটাইম একটি আধুনিক ইসলামিক অ্যাপ্লিকেশন যা আপনাকে নামাজের সময়সূচী, দোয়া, সূরা, নামাজ ট্র্যাকার এবং আরও অনেক কিছু সরবরাহ করে।'
-            : 'NoorTime is a modern Islamic application that provides prayer schedules, duas, surahs, a prayer tracker, and more.'}
-        </p>
+
+        {/* Clock and Date */}
+        <div className="flex flex-col items-center space-y-2">
+          <div className="text-xl font-bold text-gray-700">
+            🕒 {timeString}
+          </div>
+          <div className="text-lg text-gray-600">
+            📅 {language === 'bn' ? dateString : currentTime.toDateString()}
+          </div>
+        </div>
+
+        
 
         {/* Features Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {features.map((feature, idx) => (
-           <Link to={feature.path} key={idx} className="block">
-           <div className="bg-gradient-to-b from-green-100 to-white border-2 border-green-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-             <div className="flex items-center justify-center mb-4">
-               {feature.icon}
-             </div>
-             <h3 className="text-2xl font-semibold text-green-600 mb-4">
-               {language === 'bn' ? feature.title.bn : feature.title.en}
-             </h3>
-             <p className="text-lg text-gray-700 mb-4">
-               {language === 'bn' ? feature.desc.bn : feature.desc.en}
-             </p>
-             <div className="text-sm font-medium text-green-600 hover:underline">
-               {language === 'bn' ? 'আরও জানুন' : 'Learn More'}
-             </div>
-           </div>
-         </Link>
-         
+            <Link to={feature.path} key={idx} className="block">
+              <div className="bg-gradient-to-b from-green-100 to-white border-2 border-green-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                <div className="flex items-center justify-center mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-semibold text-green-600 mb-4">
+                  {language === 'bn' ? feature.title.bn : feature.title.en}
+                </h3>
+                <p className="text-lg text-gray-700 mb-4">
+                  {language === 'bn' ? feature.desc.bn : feature.desc.en}
+                </p>
+                <div className="text-sm font-medium text-green-600 hover:underline">
+                  {language === 'bn' ? 'আরও জানুন' : 'Learn More'}
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
 

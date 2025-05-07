@@ -617,14 +617,14 @@ function DuaSection() {
               <div className="flex justify-center gap-4 mt-4">
                 <button
                   onClick={() => copyToClipboard(dua.arabic)}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow"
+                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded shadow"
                 >
                   <ClipboardDocumentIcon className="w-5 h-5" />
                   {labels[language].copy}
                 </button>
                 <button
                   onClick={() => shareDua(dua.arabic)}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
+                  className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-2 py-1 rounded shadow"
                 >
                   <ShareIcon className="w-5 h-5" />
                   {labels[language].share}
