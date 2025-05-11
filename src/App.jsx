@@ -12,6 +12,7 @@ import LanguageToggle from './Context/LanguageToggle';
 import Home from './Components/Home';
 import Settings from './Components/Settings';
 import Calendar from './Components/Calendar';
+import IslamicQASection from './Components/IslamicQASection';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/dua" element={<DuaSection />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/calendar" element={<Calendar/>} />
+              <Route path="/islamic-qa" element={<IslamicQASection />} />
 
             </Routes>
           </div>

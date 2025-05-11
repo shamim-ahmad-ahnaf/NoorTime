@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
+import { FaQuestionCircle } from 'react-icons/fa'; 
+
 import {
   FaPrayingHands,
   FaBookOpen,
@@ -11,7 +13,7 @@ import {
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-// Features data
+
 const features = [
   {
     icon: <FaPrayingHands className="text-4xl text-green-600" />,
@@ -59,6 +61,15 @@ const features = [
     path: '/calendar',
   },
   {
+    icon: <FaQuestionCircle className="text-4xl text-green-600" />, // New icon
+    title: { bn: 'প্রশ্নোত্তর', en: 'Islamic Q&A' },
+    desc: {
+      bn: 'ইসলামিক প্রশ্নোত্তর পড়ুন ও শিখুন।',
+      en: 'Explore and learn from Islamic Q&A.',
+    },
+    path: '/islamic-qa',
+  },
+  {
     icon: <FaCog className="text-4xl text-green-600" />,
     title: { bn: 'সেটিংস', en: 'Settings' },
     desc: {
@@ -77,6 +88,7 @@ const features = [
     path: '/about',
   },
 ];
+
 
 function Home() {
   const { language } = useLanguage();
@@ -105,7 +117,7 @@ function Home() {
           {language === 'bn' ? 'দ্বীনযুনে আপনাকে স্বাগতম' : 'Welcome to DeenZone'}
         </h2>
 
-        {/* Clock and Date */}
+        
         <div className="flex flex-col items-center space-y-2">
           <div className="text-xl font-bold text-gray-700">🕒 {timeString}</div>
           <div className="text-lg text-gray-600">
@@ -113,7 +125,7 @@ function Home() {
           </div>
         </div>
 
-        {/* Features Section */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {features.map((feature, idx) => (
             <Link to={feature.path} key={idx} className="block">
@@ -134,8 +146,7 @@ function Home() {
             </Link>
           ))}
         </div>
-
-        {/* Call to Action */}
+        
         <div className="mt-12">
           <Link
             to="/prayer"
@@ -143,6 +154,7 @@ function Home() {
           >
             {language === 'bn' ? 'নামাজের সময় দেখুন' : 'View Prayer Times'}
           </Link>
+          
         </div>
       </div>
     </div>
