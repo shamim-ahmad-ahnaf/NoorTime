@@ -12,6 +12,10 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.5",
+    "bangla-calendar": "^7.0.0",
+    "hijri-date": "^0.2.2",
+    "moment": "^2.30.1",
+    "moment-hijri": "^3.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",

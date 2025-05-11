@@ -7,6 +7,7 @@ import {
   FaQuran,
   FaCog,
   FaInfoCircle,
+  FaRegCalendarAlt,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -49,6 +50,15 @@ const features = [
     path: '/tracker',
   },
   {
+    icon: <FaRegCalendarAlt className="text-4xl text-green-600" />,
+    title: { bn: 'ইসলামিক ক্যালেন্ডার', en: 'Islamic Calendar' },
+    desc: {
+      bn: 'হিজরি তারিখসহ ইসলামিক বিশেষ দিনগুলো জানুন।',
+      en: 'Check Hijri dates and Islamic events.',
+    },
+    path: '/calendar',
+  },
+  {
     icon: <FaCog className="text-4xl text-green-600" />,
     title: { bn: 'সেটিংস', en: 'Settings' },
     desc: {
@@ -71,7 +81,6 @@ const features = [
 function Home() {
   const { language } = useLanguage();
 
-  // Time and Date States
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -98,15 +107,11 @@ function Home() {
 
         {/* Clock and Date */}
         <div className="flex flex-col items-center space-y-2">
-          <div className="text-xl font-bold text-gray-700">
-            🕒 {timeString}
-          </div>
+          <div className="text-xl font-bold text-gray-700">🕒 {timeString}</div>
           <div className="text-lg text-gray-600">
             📅 {language === 'bn' ? dateString : currentTime.toDateString()}
           </div>
         </div>
-
-        
 
         {/* Features Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">

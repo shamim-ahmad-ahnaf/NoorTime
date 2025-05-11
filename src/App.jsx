@@ -11,6 +11,7 @@ import { LanguageProvider } from './Context/LanguageContext';
 import LanguageToggle from './Context/LanguageToggle';
 import Home from './Components/Home';
 import Settings from './Components/Settings';
+import Calendar from './Components/Calendar';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
               <Route path="/tracker" element={<PrayerTracker />} />
               <Route path="/dua" element={<DuaSection />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/calendar" element={<Calendar/>} />
+
             </Routes>
           </div>
           <div className="p-4 flex justify-center">
