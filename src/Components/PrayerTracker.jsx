@@ -85,7 +85,7 @@ function PrayerTracker() {
   });
 
   return (
-    <div className="bg-gradient-to-br from-green-100 to-green-50 p-6 rounded-3xl shadow-xl mt-20 max-w-7xl mx-auto border border-green-200">
+    <div className="bg-gradient-to-br from-green-100 to-green-50 p-6 rounded-3xl shadow-xl mt-16 max-w-7xl mx-auto border border-green-200">
       <h2 className="text-3xl font-bold text-center text-green-700 mb-8">{headingText}</h2>
 
       {/* Display today's date below the heading */}
@@ -101,7 +101,7 @@ function PrayerTracker() {
           <div
             key={prayer}
             className={`transition-all duration-300 p-5 rounded-2xl border-l-4 ${
-              tracker[prayer].done ? 'bg-green-100 border-green-400' : 'bg-white border-green-300'
+              tracker[prayer].done ? 'bg-teal-50 border-t-1 border-green-400' : 'bg-white border-green-300  border-r-3'
             } shadow-md`}
           >
             <div className="flex items-start justify-between">
@@ -109,7 +109,7 @@ function PrayerTracker() {
                 <h3 className="text-lg font-semibold text-gray-800">
                   {prayerNames[language][prayer]}
                 </h3>
-                <p className="text-sm text-gray-500">{prayerTimes[prayer]}</p>
+                <p className="text-sm text-gray-700">{prayerTimes[prayer]}</p>
               </div>
               <input
                 type="checkbox"
@@ -123,7 +123,7 @@ function PrayerTracker() {
               placeholder={language === 'bn' ? 'নোট লিখুন (ঐচ্ছিক)' : 'Write a note (optional)'}
               value={tracker[prayer].note}
               onChange={(e) => handleNoteChange(prayer, e.target.value)}
-              className="w-full mt-3 px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
+              className="w-full mt-3 px-3 py-2 font-bold text-sm text-gray-600 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-300 resize-none"
             />
           </div>
         ))}
