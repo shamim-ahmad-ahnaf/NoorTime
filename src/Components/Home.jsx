@@ -13,6 +13,7 @@ import {
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import { FaEnvelope } from 'react-icons/fa';
 
 const features = [
   {
@@ -69,15 +70,16 @@ const features = [
     },
     path: '/islamic-qa',
   },
-  {
-    icon: <FaCog className="text-4xl text-green-600" />,
-    title: { bn: 'সেটিংস', en: 'Settings' },
-    desc: {
-      bn: 'আপনার পছন্দ অনুযায়ী অ্যাপ সেটিংস কাস্টমাইজ করুন।',
-      en: 'Customize app settings to your preference.',
-    },
-    path: '/settings',
+ {
+  icon: <FaEnvelope className="text-4xl text-green-600" />,
+  title: { bn: 'যোগাযোগ', en: 'Contact' },
+  desc: {
+    bn: ' আমাদের সাথে যোগাযোগ করতে ক্লিক করুন।',
+    en: 'Use the contact form to get in touch with us.',
   },
+   path: '/settings',
+},
+
   {
     icon: <FaInfoCircle className="text-4xl text-green-600" />,
     title: { bn: 'দ্বীনযুন সম্পর্কে', en: 'About DeenZone' },
@@ -88,8 +90,6 @@ const features = [
     path: '/about',
   },
 ];
-
-
 function Home() {
   const { language } = useLanguage();
 
@@ -114,12 +114,11 @@ function Home() {
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-16">
       <div className="max-w-7xl mx-auto text-center space-y-8">
         <h2 className="text-4xl font-extrabold text-green-600">
-          {language === 'bn' ? 'দ্বীনযুনে আপনাকে স্বাগতম' : 'Welcome to DeenZone'}
+          {language === 'bn' ? 'দ্বীনযুনে আপনাকে স্বাগতম  ' : 'Welcome to DeenZone'}
         </h2>
-
         
         <div className="flex flex-col items-center space-y-2">
-          <div className="text-xl font-bold text-gray-700">🕒 {timeString}</div>
+          <div className="text-xl font-bold text-gray-700">🕒    {timeString}</div>
           <div className="text-lg text-gray-600">
             📅 {language === 'bn' ? dateString : currentTime.toDateString()}
           </div>

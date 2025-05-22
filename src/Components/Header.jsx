@@ -19,7 +19,7 @@ function Header() {
   };
 
   return (
-    <header className="w-full bg-green-600 text-white py-4 shadow-md fixed z-50">
+    <header className="w-full bg-green-800 text-white py-4 shadow-md fixed z-50">
       <div className="w-11/12 mx-auto flex justify-between items-center">
         <h1
           onClick={handleTitleClick}
@@ -61,7 +61,7 @@ function Header() {
             {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}
           </Link>
           <Link to="/settings" className="text-lg hover:text-gray-300">
-            {language === 'bn' ? 'সেটিংস' : 'Settings'}
+            {language === 'bn' ? 'যোগাযোগ' : 'Contact '}
           </Link>
           <Link to="/about" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'দ্বীনযুন ' : 'About DeenZone'}

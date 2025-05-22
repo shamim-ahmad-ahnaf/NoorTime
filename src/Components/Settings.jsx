@@ -1,111 +1,152 @@
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../Context/LanguageContext';
+import { useState } from "react";
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+} from "react-icons/fa";
 
-const Settings = () => {
-  const { language, changeLanguage } = useLanguage();
-  
-  // States for the selected options
-  const [selectedLanguage, setSelectedLanguage] = useState(language);
-  const [selectedDateFormat, setSelectedDateFormat] = useState(localStorage.getItem('dateFormat') || 'dd-mm-yyyy');
-  const [selectedTheme, setSelectedTheme] = useState(localStorage.getItem('theme') || 'light');
-  
-  const handleLanguageChange = (e) => {
-    const selected = e.target.value;
-    setSelectedLanguage(selected);
-    changeLanguage(selected); // Change language context
-    localStorage.setItem('language', selected); // Store language in localStorage
+export default function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
   };
-
-  const handleDateFormatChange = (e) => {
-    const format = e.target.value;
-    setSelectedDateFormat(format);
-    localStorage.setItem('dateFormat', format); // Store date format in localStorage
-  };
-
-  const handleThemeChange = (e) => {
-    const theme = e.target.value;
-    setSelectedTheme(theme);
-    localStorage.setItem('theme', theme); // Store theme in localStorage
-    document.body.className = theme;  // Apply the theme to the body (optional)
-  };
-
-  useEffect(() => {
-    // Apply stored settings on initial load (theme and language)
-    const storedLanguage = localStorage.getItem('language') || language;
-    const storedTheme = localStorage.getItem('theme') || 'light';
-    
-    setSelectedLanguage(storedLanguage);
-    setSelectedTheme(storedTheme);
-    document.body.className = storedTheme; // Apply theme on page load
-  }, [language]);
 
   return (
-    <div className="bg-gradient-to-br from-green-100 to-green-50 min-h-screen pt-24 px-4">
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <h2 className="text-4xl font-bold text-green-600 mb-8 text-center">
-          {language === 'bn' ? 'সেটিংস' : 'Settings'}
-        </h2>
+    <section className="py-16 px-6 mt-0">
+      <div className="max-w-8xl mx-auto rounded-lg p-10 flex flex-col md:flex-row gap-10">
+        {/* Left side: Contact Form */}
+        <div className="flex-1">
+          {!submitted ? (
+            <form
+              onSubmit={handleSubmit}
+              className="w-full space-y-4 border border-green-300 p-6 rounded-lg bg-white shadow-md"
+            >
+              <h2 className="text-4xl font-semibold mb-8 text-green-700 font-sans text-center md:text-left">
+                Get in Touch
+              </h2>
 
-        {/* Language Selector */}
-        <div className="mb-8">
-          <label htmlFor="language" className="block text-lg font-semibold text-gray-700 mb-2">
-            {language === 'bn' ? 'ভাষা নির্বাচন করুন:' : 'Select Language:'}
-          </label>
-          <select
-            id="language"
-            value={selectedLanguage}
-            onChange={handleLanguageChange}
-            className="w-full border border-gray-300 rounded-lg p-3 text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <option value="bn">বাংলা</option>
-            <option value="en">English</option>
-          </select>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-green-800"
+                >
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Enter your name"
+                  className="w-full rounded-md border border-green-300 px-4 py-3 placeholder-green-400 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-green-800"
+                >
+                  Your Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="Enter your email"
+                  className="w-full rounded-md border border-green-300 px-4 py-3 placeholder-green-400 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block mb-2 text-sm font-medium text-green-800"
+                >
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  placeholder="Write your message..."
+                  className="w-full rounded-md border border-green-300 px-4 py-3 placeholder-green-400 resize-y focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-green-600 text-white py-3 rounded-md font-semibold tracking-wide hover:bg-green-700 transition"
+              >
+                Send Message
+              </button>
+            </form>
+          ) : (
+            <p className="text-center py-10 text-green-700 text-2xl font-semibold">
+              Thanks for reaching out! We'll get back to you soon.
+            </p>
+          )}
         </div>
 
-        {/* Date Format Selector */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-700 mb-3">
-            {language === 'bn' ? 'তারিখ ফরম্যাট নির্বাচন করুন:' : 'Select Date Format:'}
+        {/* Right side: Contact Info & Social Icons */}
+        <div className="md:basis-1/3 rounded-lg p-8 mt-8 flex flex-col">
+          <h3 className="text-2xl font-semibold mb-6 text-green-800">
+            Contact Info
           </h3>
-          <select
-            value={selectedDateFormat}
-            onChange={handleDateFormatChange}
-            className="w-full border border-gray-300 rounded-lg p-3 text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            aria-label="Date Format"
-          >
-            <option value="dd-mm-yyyy">{language === 'bn' ? 'দিন-মাস-বর্ষ' : 'DD-MM-YYYY'}</option>
-            <option value="mm-dd-yyyy">{language === 'bn' ? 'মাস-দিন-বর্ষ' : 'MM-DD-YYYY'}</option>
-            <option value="yyyy-mm-dd">{language === 'bn' ? 'বর্ষ-মাস-দিন' : 'YYYY-MM-DD'}</option>
-          </select>
-        </div>
+          <div className="flex items-center mb-4 text-green-700">
+            <FaPhoneAlt className="mr-3 text-xl" />
+            <span>+880 1234 567890</span>
+          </div>
+          <div className="flex items-center mb-4 text-green-700">
+            <FaEnvelope className="mr-3 text-xl" />
+            <span>info@noortime.com</span>
+          </div>
+          <div className="flex items-center mb-8 text-green-700">
+            <FaMapMarkerAlt className="mr-3 text-xl" />
+            <span>Kapasia, Gazipur, Bangladesh</span>
+          </div>
 
-        {/* Theme Settings */}
-        <div className="mb-8">
-          <h3 className="text-xl font-semibold text-gray-700 mb-3">
-            {language === 'bn' ? 'থিম নির্বাচন করুন:' : 'Select Theme:'}
+          <h3 className="text-2xl font-semibold mb-4 text-green-800">
+            Follow Us
           </h3>
-          <select
-            value={selectedTheme}
-            onChange={handleThemeChange}
-            className="w-full border border-gray-300 rounded-lg p-3 text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            aria-label="Theme"
-          >
-            <option value="light">{language === 'bn' ? 'হালকা' : 'Light'}</option>
-            <option value="dark">{language === 'bn' ? 'গা dark ়' : 'Dark'}</option>
-          </select>
-        </div>
-
-        {/* Additional Settings */}
-        <div className="text-center mt-8">
-          <p className="text-gray-500">
-            {language === 'bn'
-              ? 'আরো সেটিংস শীঘ্রই আসবে...'
-              : 'More settings coming soon...'}
-          </p>
+          <div className="flex space-x-6 text-green-700 text-2xl">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="hover:text-green-900 transition"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="hover:text-green-900 transition"
+            >
+              <FaTwitter />
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-green-900 transition"
+            >
+              <FaLinkedinIn />
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
-};
-
-export default Settings;
+}
