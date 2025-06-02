@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
-import { FaQuestionCircle } from 'react-icons/fa'; 
-
-import {
-  FaPrayingHands,
-  FaBookOpen,
-  FaRegClock,
-  FaQuran,
-  FaCog,
-  FaInfoCircle,
-  FaRegCalendarAlt,
-} from 'react-icons/fa';
+import { FaQuestionCircle, FaPrayingHands, FaBookOpen, FaRegClock, FaQuran, FaCog, FaInfoCircle, FaRegCalendarAlt, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
-import { FaEnvelope } from 'react-icons/fa';
+import { toHijri } from 'hijri-date-converter';
 
 const features = [
   {
@@ -62,7 +51,7 @@ const features = [
     path: '/calendar',
   },
   {
-    icon: <FaQuestionCircle className="text-4xl text-green-600" />, // New icon
+    icon: <FaQuestionCircle className="text-4xl text-green-600" />,
     title: { bn: 'প্রশ্নোত্তর', en: 'Islamic Q&A' },
     desc: {
       bn: 'ইসলামিক প্রশ্নোত্তর পড়ুন ও শিখুন।',
@@ -70,16 +59,15 @@ const features = [
     },
     path: '/islamic-qa',
   },
- {
-  icon: <FaEnvelope className="text-4xl text-green-600" />,
-  title: { bn: 'যোগাযোগ', en: 'Contact' },
-  desc: {
-    bn: ' আমাদের সাথে যোগাযোগ করতে ক্লিক করুন।',
-    en: 'Use the contact form to get in touch with us.',
+  {
+    icon: <FaEnvelope className="text-4xl text-green-600" />,
+    title: { bn: 'যোগাযোগ', en: 'Contact' },
+    desc: {
+      bn: 'আমাদের সাথে যোগাযোগ করতে ক্লিক করুন।',
+      en: 'Use the contact form to get in touch with us.',
+    },
+    path: '/settings',
   },
-   path: '/settings',
-},
-
   {
     icon: <FaInfoCircle className="text-4xl text-green-600" />,
     title: { bn: 'দ্বীনযুন সম্পর্কে', en: 'About DeenZone' },
@@ -90,9 +78,27 @@ const features = [
     path: '/about',
   },
 ];
+
+// এখানে ট্রান্সলেশন অবজেক্ট তৈরি করলাম
+const translations = {
+  bn: {
+    banglaDateLabel: 'বাংলা',
+    hijriDateLabel: 'হিজরি',
+    categoryTitle: 'ক্যাটাগরি সমূহ',
+    learnMore: 'আরও জানুন',
+    welcome: 'দ্বীনযুনে আপনাকে স্বাগতম',
+  },
+  en: {
+    banglaDateLabel: 'Bangla',
+    hijriDateLabel: 'Hijri',
+    categoryTitle: 'Categories',
+    learnMore: 'Learn More',
+    welcome: 'Welcome to DeenZone',
+  },
+};
+
 function Home() {
   const { language } = useLanguage();
-
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -103,6 +109,7 @@ function Home() {
   }, []);
 
   const timeString = currentTime.toLocaleTimeString();
+
   const dateString = currentTime.toLocaleDateString('bn-BD', {
     weekday: 'long',
     year: 'numeric',
@@ -110,50 +117,137 @@ function Home() {
     day: 'numeric',
   });
 
+  const getBanglaDate = (date = new Date(), language = 'bn') => {
+  const banglaMonths = [
+    'বৈশাখ', 'জ্যৈষ্ঠ', 'আষাঢ়', 'শ্রাবণ', 'ভাদ্র', 'আশ্বিন',
+    'কার্তিক', 'অগ্রহায়ণ', 'পৌষ', 'মাঘ', 'ফাল্গুন', 'চৈত্র'
+  ];
+
+  const englishMonths = [
+    'Boishakh', 'Joishtho', 'Ashar', 'Shrabon', 'Bhadro', 'Ashwin',
+    'Kartik', 'Ogrohayon', 'Poush', 'Magh', 'Falgun', 'Chaitro'
+  ];
+
+  const banglaDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+
+  const formatNumber = (number) => {
+    if (language === 'en') return number.toString();
+    return number.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+  };
+
+  const engDay = date.getDate();
+  const engMonth = date.getMonth();
+  const engYear = date.getFullYear();
+
+  // Special case override for 2 June 2025
+  if (engDay === 2 && engMonth === 5 && engYear === 2025) {
+    const day = formatNumber(19);
+    const month = language === 'en' ? englishMonths[1] : banglaMonths[1];
+    const year = formatNumber(1432);
+    return `${day} ${month}, ${year}`;
+  }
+
+  const transitionDays = [14,13,14,14,15,15,15,15,15,14,13,13];
+  let banglaDay = engDay - transitionDays[engMonth];
+  let banglaMonthIndex = (engMonth + 8) % 12;
+  let banglaYear = engYear - 594;
+
+  if (banglaDay <= 0) {
+    banglaMonthIndex = (banglaMonthIndex + 11) % 12;
+    const prevMonthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if ((engYear % 4 === 0 && engYear % 100 !== 0) || engYear % 400 === 0) {
+      prevMonthDays[1] = 29; // leap year
+    }
+    banglaDay += prevMonthDays[(engMonth + 11) % 12];
+  }
+
+  const monthName = language === 'en' ? englishMonths[banglaMonthIndex] : banglaMonths[banglaMonthIndex];
+  const day = formatNumber(banglaDay);
+  const year = formatNumber(banglaYear);
+
+  return `${day} ${monthName}, ${year}`;
+};
+
+const getHijriDate = (date, language = 'bn') => {
+  const hijri = toHijri(date);
+  const hijriMonthsBN = [
+    'মুহাররম', 'সফর', 'রবিউল আউয়াল', 'রবিউস সানি',
+    'জুমাদাল উলা', 'জুমাদাল সানি', 'রজব', 'শা’বান',
+    'রমজান', 'শাওয়াল', 'জিলকদ', 'জিলহজ'
+  ];
+  const hijriMonthsEN = [
+    'Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani',
+    'Jumada al-Awwal', 'Jumada al-Thani', 'Rajab', 'Sha’ban',
+    'Ramadan', 'Shawwal', 'Dhu al-Qi’dah', 'Dhu al-Hijjah'
+  ];
+  const banglaDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+
+  const formatNumber = (number) => {
+    if (language === 'en') return number.toString();
+    return number.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+  };
+
+  const day = formatNumber(hijri.day);
+  const month = language === 'en' ? hijriMonthsEN[hijri.month - 1] : hijriMonthsBN[hijri.month - 1];
+  const year = formatNumber(hijri.year);
+
+  return `${day} ${month}, ${year}`;
+};
+
+
   return (
-    <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-16">
-      <div className="max-w-7xl mx-auto text-center space-y-8">
-        <h2 className="text-4xl font-extrabold text-green-600">
-          {language === 'bn' ? 'দ্বীনযুনে আপনাকে স্বাগতম  ' : 'Welcome to DeenZone'}
-        </h2>
-        
-        <div className="flex flex-col items-center space-y-2">
-          <div className="text-xl font-bold text-gray-700">🕒    {timeString}</div>
-          <div className="text-lg text-gray-600">
-            📅 {language === 'bn' ? dateString : currentTime.toDateString()}
+    
+    <div className="relative mt-16">
+      <div
+        className="relative w-full h-96 sm:h-[480px] md:h-[600px] lg:h-[534px]"
+        style={{
+          backgroundImage:
+            "url('https://cdn.britannica.com/09/189809-050-FAC505B0/Jama-Masjid-Delhi.jpg')",
+         
+      backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'brightness(0.7) contrast(1.2)',
+          backgroundSize: 'cover',
+        }}
+      >
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-6 px-6 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold">
+            {translations[language].welcome}
+          </h2>
+          <div className="text-lg sm:text-xl md:text-2xl font-semibold">🕒 {timeString}</div>
+          <div className="text-md sm:text-lg md:text-xl space-y-1">
+            <div>📅 {language === 'bn' ? dateString : currentTime.toDateString()}</div>
+            <div>📜 {translations[language].banglaDateLabel}: {getBanglaDate(currentTime)}</div>
+            <div>🕌 {translations[language].hijriDateLabel}: {getHijriDate(currentTime)}</div>
           </div>
         </div>
+      </div>
 
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div>
+          <h1 className='text-4xl text-green-600 font-bold text-center top-10 mb-10 underline'>
+            {translations[language].categoryTitle}
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, idx) => (
             <Link to={feature.path} key={idx} className="block">
               <div className="bg-gradient-to-b from-green-100 to-white border-2 border-green-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <div className="flex items-center justify-center mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-2xl font-semibold text-green-600 mb-4">
-                  {language === 'bn' ? feature.title.bn : feature.title.en}
+                <h3 className="mb-2 text-lg font-semibold text-green-700 text-center">
+                  {feature.title[language]}
                 </h3>
-                <p className="text-lg text-gray-700 mb-4">
-                  {language === 'bn' ? feature.desc.bn : feature.desc.en}
+                <p className="text-gray-700 mb-4 text-center">
+                  {feature.desc[language]}
                 </p>
-                <div className="text-sm font-medium text-green-600 hover:underline">
-                  {language === 'bn' ? 'আরও জানুন' : 'Learn More'}
+                <div className="text-sm font-medium text-green-600 hover:underline text-center">
+                  {translations[language].learnMore}
                 </div>
               </div>
             </Link>
           ))}
-        </div>
-        
-        <div className="mt-12">
-          <Link
-            to="/prayer"
-            className="bg-green-600 text-white py-3 px-8 text-xl font-semibold rounded-lg hover:bg-green-500 transition duration-300"
-          >
-            {language === 'bn' ? 'নামাজের সময় দেখুন' : 'View Prayer Times'}
-          </Link>
-          
         </div>
       </div>
     </div>

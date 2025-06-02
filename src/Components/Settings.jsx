@@ -4,20 +4,69 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
   FaFacebookF,
-  FaTwitter,
   FaLinkedinIn,
 } from "react-icons/fa";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true); // Show loading modal
+    const formData = new FormData(e.target);
+
+    formData.append("access_key", "38df47ed-4efc-4a52-932b-9b24ea8c48a0");
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    }).then((res) => res.json());
+
+    setLoading(false); // Hide loading modal
+
+    if (res.success) {
+      setSubmitted(true);
+    } else {
+      alert("Something went wrong. Please try again.");
+      console.error("Submission failed:", res);
+    }
   };
 
   return (
-    <section className="py-16 px-6 mt-0">
+    <section className="py-16 px-6 mt-0 relative">
+      {/* ✅ Loading Popup */}
+      {loading && (
+        <div className="fixed top-0 left-0 w-full h-full bg bg-opacity-40 z-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded-md flex flex-col items-center shadow-lg">
+            <svg className="animate-spin h-10 w-10 text-green-600 mb-4" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+              ></path>
+            </svg>
+            <p className="text-green-700 font-semibold text-lg">Sending Message...</p>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-8xl mx-auto rounded-lg p-10 flex flex-col md:flex-row gap-10">
         {/* Left side: Contact Form */}
         <div className="flex-1">
@@ -31,10 +80,7 @@ export default function Contact() {
               </h2>
 
               <div>
-                <label
-                  htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-green-800"
-                >
+                <label htmlFor="name" className="block mb-2 text-sm font-medium text-green-800">
                   Your Name
                 </label>
                 <input
@@ -48,10 +94,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-green-800"
-                >
+                <label htmlFor="email" className="block mb-2 text-sm font-medium text-green-800">
                   Your Email
                 </label>
                 <input
@@ -65,10 +108,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label
-                  htmlFor="message"
-                  className="block mb-2 text-sm font-medium text-green-800"
-                >
+                <label htmlFor="message" className="block mb-2 text-sm font-medium text-green-800">
                   Your Message
                 </label>
                 <textarea
@@ -90,35 +130,36 @@ export default function Contact() {
             </form>
           ) : (
             <p className="text-center py-10 text-green-700 text-2xl font-semibold">
-              Thanks for reaching out! We'll get back to you soon.
+              ✅ Thanks for reaching out! We'll get back to you soon.
             </p>
           )}
         </div>
 
         {/* Right side: Contact Info & Social Icons */}
         <div className="md:basis-1/3 rounded-lg p-8 mt-8 flex flex-col">
-          <h3 className="text-2xl font-semibold mb-6 text-green-800">
-            Contact Info
-          </h3>
+          <h3 className="text-2xl font-semibold mb-6 text-green-800">Contact Info</h3>
           <div className="flex items-center mb-4 text-green-700">
             <FaPhoneAlt className="mr-3 text-xl" />
-            <span>+880 1234 567890</span>
+            <a href="tel:+8801748186766" className="hover:underline">
+              +880 1748186766
+            </a>
+
           </div>
           <div className="flex items-center mb-4 text-green-700">
             <FaEnvelope className="mr-3 text-xl" />
-            <span>info@noortime.com</span>
+            <a href="mailto:shamimahmadahnaf@gmail.com" className="hover:underline">
+              shamimahmadahnaf@gmail.com
+            </a>
+
           </div>
           <div className="flex items-center mb-8 text-green-700">
             <FaMapMarkerAlt className="mr-3 text-xl" />
             <span>Kapasia, Gazipur, Bangladesh</span>
           </div>
 
-          <h3 className="text-2xl font-semibold mb-4 text-green-800">
-            Follow Us
-          </h3>
           <div className="flex space-x-6 text-green-700 text-2xl">
             <a
-              href="#"
+              href="https://www.facebook.com/profile.php?id=100092273649975&mibextid=ZbWKwL"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -127,16 +168,7 @@ export default function Contact() {
               <FaFacebookF />
             </a>
             <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className="hover:text-green-900 transition"
-            >
-              <FaTwitter />
-            </a>
-            <a
-              href="#"
+              href="https://www.linkedin.com/in/shamim-ahmad-772484331"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"

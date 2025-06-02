@@ -57,15 +57,11 @@ function Header() {
           <Link to="/surah" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'সূরা' : 'Surahs'}
           </Link>
-          <Link to="/tracker" className="text-lg hover:text-gray-300">
-            {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}
-          </Link>
+          
           <Link to="/settings" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'যোগাযোগ' : 'Contact '}
           </Link>
-          <Link to="/about" className="text-lg hover:text-gray-300">
-            {language === 'bn' ? 'দ্বীনযুন ' : 'About DeenZone'}
-          </Link>
+          
         </nav>
 
         {/* Desktop Language Toggle */}
@@ -85,9 +81,7 @@ function Header() {
           <Link to="/" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
             {language === 'bn' ? 'হোম' : 'Home'}
           </Link>
-          <Link to="/about" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'আমাদের সম্পর্কে' : 'About Us'}
-          </Link>
+         
           <Link to="/prayer" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
             {language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}
           </Link>
@@ -102,7 +96,7 @@ function Header() {
             {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}
           </Link>
           <Link to="/settings" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'সেটিংস' : 'Settings'}
+            {language === 'bn' ? 'যোগাযোগ' : 'Contact '}
           </Link>
           <Link to="/about" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
             {language === 'bn' ? 'দ্বীনযুন সম্পর্কে' : 'About DeenZone'}
