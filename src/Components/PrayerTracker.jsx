@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
-
+import RevealOnScroll from '../Context/RevealOnScroll'; // Assuming you have a RevealOnScroll component for animations
 function PrayerTracker() {
   const initialState = {
     fajr: { done: false, note: '' },
@@ -85,6 +85,7 @@ function PrayerTracker() {
   });
 
   return (
+  <RevealOnScroll>
     <div className="bg-gradient-to-br from-green-100 to-green-50 p-6 rounded-3xl shadow-xl mt-16 max-w-7xl mx-auto border border-green-200">
       <h2 className="text-3xl font-bold text-center text-green-700 mb-8">{headingText}</h2>
 
@@ -129,6 +130,7 @@ function PrayerTracker() {
         ))}
       </div>
     </div>
+    </RevealOnScroll>
   );
 }
 

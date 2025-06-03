@@ -1,4 +1,5 @@
 import { useState } from "react";
+import RevealOnScroll from "../Context/RevealOnScroll";
 import {
   FaPhoneAlt,
   FaEnvelope,
@@ -41,11 +42,12 @@ export default function Contact() {
   };
 
   return (
+    <RevealOnScroll>
     <section className="py-16 px-6 mt-0 relative">
       {/* ✅ Loading Popup */}
       {loading && (
-        <div className="fixed top-0 left-0 w-full h-full bg bg-opacity-40 z-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-md flex flex-col items-center shadow-lg">
+        <div className="fixed top-0 left-0 w-full h-full backdrop-blur-xl bg bg-opacity-40 z-50 flex items-center justify-center">
+          <div className="bg-white border border-green-600 p-8 rounded-md flex flex-col items-center shadow-lg">
             <svg className="animate-spin h-10 w-10 text-green-600 mb-4" viewBox="0 0 24 24">
               <circle
                 className="opacity-25"
@@ -180,5 +182,6 @@ export default function Contact() {
         </div>
       </div>
     </section>
+    </RevealOnScroll>
   );
 }

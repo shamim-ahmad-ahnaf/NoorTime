@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
 import { Link, useNavigate, useLocation } from 'react-router-dom'; // ✅ Navigation ও Location
-
+import { motion, AnimatePresence } from "framer-motion";
 function Header() {
   const { language, toggleLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ function Header() {
   };
 
   return (
-    <header className="w-full bg-green-800 text-white py-4 shadow-md fixed z-50">
+    <header className="w-full bg-green-950 text-white py-4 shadow-md fixed z-50">
       <div className="w-11/12 mx-auto flex justify-between items-center">
         <h1
           onClick={handleTitleClick}
@@ -46,22 +46,18 @@ function Header() {
           <Link to="/" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'হোম' : 'Home'}
           </Link>
-          
           <Link to="/prayer" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}
           </Link>
           <Link to="/dua" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'দোয়া' : 'Dua'}
           </Link>
-          {/* Add the new links */}
           <Link to="/surah" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'সূরা' : 'Surahs'}
           </Link>
-          
           <Link to="/settings" className="text-lg hover:text-gray-300">
             {language === 'bn' ? 'যোগাযোগ' : 'Contact '}
           </Link>
-          
         </nav>
 
         {/* Desktop Language Toggle */}
@@ -75,44 +71,51 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-          <div className="lg:hidden mt-4 space-y-4 w-11/12 mx-auto bg-white text-green-600 p-4 rounded shadow-md">
-          <Link to="/" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'হোম' : 'Home'}
-          </Link>
-         
-          <Link to="/prayer" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}
-          </Link>
-          <Link to="/dua" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'দোয়া' : 'Dua'}
-          </Link>
-          {/* Add the new links */}
-          <Link to="/surah" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'সূরা' : 'Surahs'}
-          </Link>
-          <Link to="/tracker" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}
-          </Link>
-          <Link to="/settings" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'যোগাযোগ' : 'Contact '}
-          </Link>
-          <Link to="/about" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
-            {language === 'bn' ? 'দ্বীনযুন সম্পর্কে' : 'About DeenZone'}
-          </Link>
+      {/* Mobile Navigation with Framer Motion */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden mt-4 space-y-4 w-11/12 mx-auto bg-white text-green-600 p-4 rounded shadow-md"
+          >
+            <Link to="/" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'হোম' : 'Home'}
+            </Link>
+            <Link to="/prayer" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}
+            </Link>
+            <Link to="/dua" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'দোয়া' : 'Dua'}
+            </Link>
+            <Link to="/surah" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'সূরা' : 'Surahs'}
+            </Link>
+            <Link to="/tracker" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}
+            </Link>
+            <Link to="/settings" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'যোগাযোগ' : 'Contact '}
+            </Link>
+            <Link to="/about" className="block text-lg hover:text-gray-300" onClick={toggleMenu}>
+              {language === 'bn' ? 'দ্বীনযুন সম্পর্কে' : 'About DeenZone'}
+            </Link>
 
-          <div className="mt-4">
-            <button
-              onClick={toggleLanguage}
-              className="bg-white text-green-600 px-3 py-1 rounded font-semibold"
-            >
-              {language === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
-            </button>
-          </div>
-        </div>
-      )}
+            <div className="mt-4">
+              <button
+                onClick={toggleLanguage}
+                className="bg-white text-green-600 px-3 py-1 rounded font-semibold"
+              >
+                {language === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
+
   );
 }
 

@@ -3,6 +3,8 @@ import { useLanguage } from '../Context/LanguageContext';
 import { FaQuestionCircle, FaPrayingHands, FaBookOpen, FaRegClock, FaQuran, FaCog, FaInfoCircle, FaRegCalendarAlt, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toHijri } from 'hijri-date-converter';
+import { motion } from 'framer-motion';
+
 
 const features = [
   {
@@ -77,9 +79,20 @@ const features = [
     },
     path: '/about',
   },
+
+  {
+    icon: <FaCog className="text-4xl text-green-600" />,
+    title: { bn: 'প্রাইভেসি পলিসি', en: 'Privacy Policy' },
+    desc: {
+      bn: 'আমাদের প্রাইভেসি পলিসি সম্পর্কে জানুন।',
+      en: 'Learn about our privacy policy.',
+    },
+    path: '/privacy',
+  },
+
 ];
 
-// এখানে ট্রান্সলেশন অবজেক্ট তৈরি করলাম
+
 const translations = {
   bn: {
     banglaDateLabel: 'বাংলা',
@@ -118,139 +131,179 @@ function Home() {
   });
 
   const getBanglaDate = (date = new Date(), language = 'bn') => {
-  const banglaMonths = [
-    'বৈশাখ', 'জ্যৈষ্ঠ', 'আষাঢ়', 'শ্রাবণ', 'ভাদ্র', 'আশ্বিন',
-    'কার্তিক', 'অগ্রহায়ণ', 'পৌষ', 'মাঘ', 'ফাল্গুন', 'চৈত্র'
-  ];
+    const banglaMonths = [
+      'বৈশাখ', 'জ্যৈষ্ঠ', 'আষাঢ়', 'শ্রাবণ', 'ভাদ্র', 'আশ্বিন',
+      'কার্তিক', 'অগ্রহায়ণ', 'পৌষ', 'মাঘ', 'ফাল্গুন', 'চৈত্র'
+    ];
 
-  const englishMonths = [
-    'Boishakh', 'Joishtho', 'Ashar', 'Shrabon', 'Bhadro', 'Ashwin',
-    'Kartik', 'Ogrohayon', 'Poush', 'Magh', 'Falgun', 'Chaitro'
-  ];
+    const englishMonths = [
+      'Boishakh', 'Joishtho', 'Ashar', 'Shrabon', 'Bhadro', 'Ashwin',
+      'Kartik', 'Ogrohayon', 'Poush', 'Magh', 'Falgun', 'Chaitro'
+    ];
 
-  const banglaDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
-  const formatNumber = (number) => {
-    if (language === 'en') return number.toString();
-    return number.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
-  };
+    const formatNumber = (number) => {
+      if (language === 'en') return number.toString();
+      return number.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+    };
 
-  const engDay = date.getDate();
-  const engMonth = date.getMonth();
-  const engYear = date.getFullYear();
+    const engDay = date.getDate();
+    const engMonth = date.getMonth();
+    const engYear = date.getFullYear();
 
-  // Special case override for 2 June 2025
-  if (engDay === 2 && engMonth === 5 && engYear === 2025) {
-    const day = formatNumber(19);
-    const month = language === 'en' ? englishMonths[1] : banglaMonths[1];
-    const year = formatNumber(1432);
-    return `${day} ${month}, ${year}`;
-  }
-
-  const transitionDays = [14,13,14,14,15,15,15,15,15,14,13,13];
-  let banglaDay = engDay - transitionDays[engMonth];
-  let banglaMonthIndex = (engMonth + 8) % 12;
-  let banglaYear = engYear - 594;
-
-  if (banglaDay <= 0) {
-    banglaMonthIndex = (banglaMonthIndex + 11) % 12;
-    const prevMonthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
-    if ((engYear % 4 === 0 && engYear % 100 !== 0) || engYear % 400 === 0) {
-      prevMonthDays[1] = 29; // leap year
+    
+    if (engDay === 2 && engMonth === 5 && engYear === 2025) {
+      const day = formatNumber(19);
+      const month = language === 'en' ? englishMonths[1] : banglaMonths[1];
+      const year = formatNumber(1432);
+      return `${day} ${month}, ${year}`;
     }
-    banglaDay += prevMonthDays[(engMonth + 11) % 12];
-  }
 
-  const monthName = language === 'en' ? englishMonths[banglaMonthIndex] : banglaMonths[banglaMonthIndex];
-  const day = formatNumber(banglaDay);
-  const year = formatNumber(banglaYear);
+    const transitionDays = [14, 13, 14, 14, 15, 15, 15, 15, 15, 14, 13, 13];
+    let banglaDay = engDay - transitionDays[engMonth];
+    let banglaMonthIndex = (engMonth + 8) % 12;
+    let banglaYear = engYear - 594;
 
-  return `${day} ${monthName}, ${year}`;
-};
+    if (banglaDay <= 0) {
+      banglaMonthIndex = (banglaMonthIndex + 11) % 12;
+      const prevMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if ((engYear % 4 === 0 && engYear % 100 !== 0) || engYear % 400 === 0) {
+        prevMonthDays[1] = 29; 
+      }
+      banglaDay += prevMonthDays[(engMonth + 11) % 12];
+    }
 
-const getHijriDate = (date, language = 'bn') => {
-  const hijri = toHijri(date);
-  const hijriMonthsBN = [
-    'মুহাররম', 'সফর', 'রবিউল আউয়াল', 'রবিউস সানি',
-    'জুমাদাল উলা', 'জুমাদাল সানি', 'রজব', 'শা’বান',
-    'রমজান', 'শাওয়াল', 'জিলকদ', 'জিলহজ'
-  ];
-  const hijriMonthsEN = [
-    'Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani',
-    'Jumada al-Awwal', 'Jumada al-Thani', 'Rajab', 'Sha’ban',
-    'Ramadan', 'Shawwal', 'Dhu al-Qi’dah', 'Dhu al-Hijjah'
-  ];
-  const banglaDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+    const monthName = language === 'en' ? englishMonths[banglaMonthIndex] : banglaMonths[banglaMonthIndex];
+    const day = formatNumber(banglaDay);
+    const year = formatNumber(banglaYear);
 
-  const formatNumber = (number) => {
-    if (language === 'en') return number.toString();
-    return number.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+    return `${day} ${monthName}, ${year}`;
   };
 
-  const day = formatNumber(hijri.day);
-  const month = language === 'en' ? hijriMonthsEN[hijri.month - 1] : hijriMonthsBN[hijri.month - 1];
-  const year = formatNumber(hijri.year);
+  const getHijriDate = (date, language = 'bn') => {
+    const hijri = toHijri(date);
+    const hijriMonthsBN = [
+      'মুহাররম', 'সফর', 'রবিউল আউয়াল', 'রবিউস সানি',
+      'জুমাদাল উলা', 'জুমাদাল সানি', 'রজব', 'শা’বান',
+      'রমজান', 'শাওয়াল', 'জিলক্বদ', 'জিলহজ্জ'
+    ];
+    const hijriMonthsEN = [
+      'Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani',
+      'Jumada al-Awwal', 'Jumada al-Thani', 'Rajab', 'Sha’ban',
+      'Ramadan', 'Shawwal', 'Dhu al-Qi’dah', 'Dhu al-Hijjah'
+    ];
+    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
-  return `${day} ${month}, ${year}`;
-};
+    const formatNumber = (number) => {
+      if (language === 'en') return number.toString();
+      return number.toString().split('').map(d => banglaDigits[parseInt(d)]).join('');
+    };
+
+    const day = formatNumber(hijri.day);
+    const month = language === 'en' ? hijriMonthsEN[hijri.month - 1] : hijriMonthsBN[hijri.month - 1];
+    const year = formatNumber(hijri.year);
+
+    return `${day} ${month}, ${year}`;
+  };
 
 
   return (
-    
-    <div className="relative mt-16">
-      <div
-        className="relative w-full h-96 sm:h-[480px] md:h-[600px] lg:h-[534px]"
-        style={{
-          backgroundImage:
-            "url('https://cdn.britannica.com/09/189809-050-FAC505B0/Jama-Masjid-Delhi.jpg')",
-         
-      backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          filter: 'brightness(0.7) contrast(1.2)',
-          backgroundSize: 'cover',
-        }}
-      >
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-6 px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold">
-            {translations[language].welcome}
-          </h2>
-          <div className="text-lg sm:text-xl md:text-2xl font-semibold">🕒 {timeString}</div>
-          <div className="text-md sm:text-lg md:text-xl space-y-1">
-            <div>📅 {language === 'bn' ? dateString : currentTime.toDateString()}</div>
-            <div>📜 {translations[language].banglaDateLabel}: {getBanglaDate(currentTime)}</div>
-            <div>🕌 {translations[language].hijriDateLabel}: {getHijriDate(currentTime)}</div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="relative mt-16">
+        <div
+          className="relative w-full h-96 sm:h-full md:h-[600px] lg:h-[534px]"
+          style={{
+            backgroundImage: "url('https://cdn.britannica.com/09/189809-050-FAC505B0/Jama-Masjid-Delhi.jpg')",
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'brightness(0.7) contrast(1.2)',
+            backgroundSize: 'cover',
+            width: '100vw',
+            height: '100vh',
+          }}
+        >
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-6 px-6 text-center">
+            <motion.h2
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-3xl sm:text-4xl md:text-5xl font-extrabold"
+            >
+              {translations[language].welcome}
+            </motion.h2>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-lg sm:text-xl md:text-2xl font-semibold"
+            >
+              🕒 {timeString}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-md sm:text-lg md:text-xl space-y-1"
+            >
+              <div>📅 {language === 'bn' ? dateString : currentTime.toDateString()}</div>
+              <div>📜 {translations[language].banglaDateLabel}: {getBanglaDate(currentTime)}</div>
+              <div>🕌 {translations[language].hijriDateLabel}: {getHijriDate(currentTime)}</div>
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+          <div>
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="text-4xl text-green-600 font-bold text-center top-10 mb-10 underline"
+            >
+              {translations[language].categoryTitle}
+            </motion.h1>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ scale: 1.05 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Link to={feature.path} className="block">
+                  <div className="bg-gradient-to-b from-green-100 to-white border-2 border-green-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform">
+                    <div className="flex items-center justify-center mb-4">
+                      {feature.icon}
+                    </div>
+                    <h3 className="mb-2 text-lg font-semibold text-green-700 text-center">
+                      {feature.title[language]}
+                    </h3>
+                    <p className="text-gray-700 mb-4 text-center">
+                      {feature.desc[language]}
+                    </p>
+                    <div className="text-sm font-medium text-green-600 hover:underline text-center">
+                      {translations[language].learnMore}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div>
-          <h1 className='text-4xl text-green-600 font-bold text-center top-10 mb-10 underline'>
-            {translations[language].categoryTitle}
-          </h1>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, idx) => (
-            <Link to={feature.path} key={idx} className="block">
-              <div className="bg-gradient-to-b from-green-100 to-white border-2 border-green-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                <div className="flex items-center justify-center mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="mb-2 text-lg font-semibold text-green-700 text-center">
-                  {feature.title[language]}
-                </h3>
-                <p className="text-gray-700 mb-4 text-center">
-                  {feature.desc[language]}
-                </p>
-                <div className="text-sm font-medium text-green-600 hover:underline text-center">
-                  {translations[language].learnMore}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
+    </motion.div>
   );
 }
 

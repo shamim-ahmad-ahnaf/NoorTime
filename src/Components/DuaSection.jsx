@@ -3,6 +3,7 @@ import { useLanguage } from '../Context/LanguageContext';
 import { ClipboardDocumentIcon, ShareIcon } from '@heroicons/react/24/outline';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { motion } from 'framer-motion';
 
 function DuaSection() {
   const { language } = useLanguage();
@@ -50,10 +51,10 @@ function DuaSection() {
       mosque: 'Entering Mosque',
       mirror: 'In Front of Mirror',
       anger: 'Anger Management',
-      
+
     },
   };
-  
+
   const duasByCategory = {
     morning_evening: [
       {
@@ -177,8 +178,8 @@ function DuaSection() {
         },
       },
     ],
-    
-  
+
+
     family: [
       {
         title: {
@@ -193,7 +194,7 @@ function DuaSection() {
         },
       },
     ],
-  
+
     food: [
       {
         title: {
@@ -316,8 +317,8 @@ function DuaSection() {
         },
       },
     ],
-    
-  
+
+
     sleep: [
       {
         title: {
@@ -404,8 +405,8 @@ function DuaSection() {
         },
       },
     ],
-    
-  
+
+
     wake_up: [
       {
         title: {
@@ -420,7 +421,7 @@ function DuaSection() {
         },
       },
     ],
-  
+
     bathroom: [
       {
         title: {
@@ -435,7 +436,7 @@ function DuaSection() {
         },
       },
     ],
-  
+
     bathroom: [
       {
         title: {
@@ -474,8 +475,8 @@ function DuaSection() {
         },
       }
     ]
-,    
-  
+    ,
+
     mosque: [
       {
         title: {
@@ -490,7 +491,7 @@ function DuaSection() {
         },
       },
     ],
-  
+
     mirror: [
       {
         title: {
@@ -505,7 +506,7 @@ function DuaSection() {
         },
       },
     ],
-  
+
     anger: [
       {
         title: {
@@ -544,9 +545,9 @@ function DuaSection() {
         },
       }
     ]
-    
+
   };
-  
+
   const [selectedCategory, setSelectedCategory] = useState('morning_evening');
 
   const copyToClipboard = (text) => {
@@ -575,33 +576,76 @@ function DuaSection() {
   };
 
   return (
-    <div className="bg-white px-4 py-8 md:py-12 max-w-7xl mx-auto mt-12">
-      <ToastContainer />
-      <h2 className="text-3xl font-bold text-green-600 mb-8 text-center">
-        {labels[language].categoryTitle}
-      </h2>
 
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
+    <motion.div
+      className="bg-white px-4 py-8 md:py-12 max-w-7xl mx-auto mt-12"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <ToastContainer />
+
+      <motion.h2
+        className="text-3xl font-bold text-green-600 mb-8 text-center"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        {labels[language].categoryTitle}
+      </motion.h2>
+
+      <motion.div
+        className="flex flex-wrap justify-center gap-3 mb-10"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.07,
+            },
+          },
+        }}
+      >
         {Object.keys(duasByCategory).map((key) => (
-          <button
+          <motion.button
             key={key}
-            className={`py-2 px-4 rounded-full text-sm md:text-base font-medium border transition ${
-              selectedCategory === key
+            className={`py-2 px-4 rounded-full text-sm md:text-base font-medium border transition ${selectedCategory === key
                 ? 'bg-green-600 text-white shadow'
                 : 'bg-green-100 text-green-800 hover:bg-green-200'
-            }`}
+              }`}
             onClick={() => setSelectedCategory(key)}
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible: { opacity: 1, y: 0 },
+            }}
           >
             {categoryTitles[language][key]}
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.1,
+            },
+          },
+        }}
+      >
         {duasByCategory[selectedCategory]?.map((dua, index) => (
-          <div
+          <motion.div
             key={index}
             className="bg-green-50 p-6 rounded-xl border border-green-200 shadow hover:shadow-lg transition"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
           >
             <h3 className="text-center text-xl font-semibold text-green-700 mb-4">
               {dua.title[language]}
@@ -631,10 +675,10 @@ function DuaSection() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

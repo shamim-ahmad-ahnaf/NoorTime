@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment-hijri';
 import 'moment/locale/bn';
-
+import RevealOnScroll from '../Context/RevealOnScroll'; // Assuming you have a RevealOnScroll component
 const islamicEvents = {
     '1-1': 'হিজরি নববর্ষ',
     '10-1': 'আশুরা',
@@ -87,6 +87,7 @@ function HijriCalendar() {
     const hijriYear = currentDate.iYear();
 
     return (
+        <RevealOnScroll>
         <div className="p-4 sm:p-6  md:p-10 mt-12 max-w-6xl mx-auto bg-white rounded-xl shadow-xl border border-green-100">
             <h2 className="text-3xl mt-6 sm:text-3xl  font-bold text-green-700 mb-4 text-center">
                 📅 ইসলামিক ক্যালেন্ডার
@@ -125,6 +126,7 @@ function HijriCalendar() {
                 </table>
             </div>
         </div>
+        </RevealOnScroll>
     );
 }
 

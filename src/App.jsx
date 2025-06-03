@@ -1,18 +1,22 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DuaSection from './Components/DuaSection';
-import Footer from './Components/Footer';
+
 import Header from './Components/Header';
-import PrayerTime from './Components/PrayerTime';
-import PrayerTracker from './Components/PrayerTracker';
-import SurahSection from './Components/SurahSection';
-import About from './Components/About';
-import { LanguageProvider } from './Context/LanguageContext';
+import Footer from './Components/Footer';
 import LanguageToggle from './Context/LanguageToggle';
+import { LanguageProvider } from './Context/LanguageContext';
+
 import Home from './Components/Home';
+import PrayerTime from './Components/PrayerTime';
+import About from './Components/About';
+import SurahSection from './Components/SurahSection';
+import PrayerTracker from './Components/PrayerTracker';
+import DuaSection from './Components/DuaSection';
 import Settings from './Components/Settings';
 import Calendar from './Components/Calendar';
 import IslamicQASection from './Components/IslamicQASection';
+import Privacy from './Components/Privacy';
+
 
 function App() {
   return (
@@ -29,9 +33,9 @@ function App() {
               <Route path="/tracker" element={<PrayerTracker />} />
               <Route path="/dua" element={<DuaSection />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/calendar" element={<Calendar/>} />
+              <Route path="/calendar" element={<Calendar />} />
               <Route path="/islamic-qa" element={<IslamicQASection />} />
-
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </div>
           <div className="p-4 flex justify-center">
