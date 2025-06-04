@@ -152,13 +152,14 @@ function Home() {
     const engMonth = date.getMonth();
     const engYear = date.getFullYear();
 
-    
-    if (engDay === 2 && engMonth === 5 && engYear === 2025) {
-      const day = formatNumber(19);
+
+    if (engDay === 4 && engMonth === 5 && engYear === 2025) {
+      const day = formatNumber(21);
       const month = language === 'en' ? englishMonths[1] : banglaMonths[1];
       const year = formatNumber(1432);
       return `${day} ${month}, ${year}`;
     }
+
 
     const transitionDays = [14, 13, 14, 14, 15, 15, 15, 15, 15, 14, 13, 13];
     let banglaDay = engDay - transitionDays[engMonth];
@@ -169,7 +170,7 @@ function Home() {
       banglaMonthIndex = (banglaMonthIndex + 11) % 12;
       const prevMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
       if ((engYear % 4 === 0 && engYear % 100 !== 0) || engYear % 400 === 0) {
-        prevMonthDays[1] = 29; 
+        prevMonthDays[1] = 29;
       }
       banglaDay += prevMonthDays[(engMonth + 11) % 12];
     }
@@ -189,9 +190,9 @@ function Home() {
       'রমজান', 'শাওয়াল', 'জিলক্বদ', 'জিলহজ্জ'
     ];
     const hijriMonthsEN = [
-      'Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani',
-      'Jumada al-Awwal', 'Jumada al-Thani', 'Rajab', 'Sha’ban',
-      'Ramadan', 'Shawwal', 'Dhu al-Qi’dah', 'Dhu al-Hijjah'
+      'Muharram', 'Safar', 'Rabi Ul-Awwal', 'Rabi Us-Sani',
+      'Jumada Ul-Awwal', 'Jumada Us-Sani', 'Rajab', 'Sha’ban',
+      'Ramadan', 'Shawwal', 'Dhu Ul-Qi’dah', 'Dhu Ul-Hijjah'
     ];
     const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
@@ -234,7 +235,9 @@ function Home() {
               transition={{ duration: 0.8 }}
               className="text-3xl sm:text-4xl md:text-5xl font-extrabold"
             >
-              {translations[language].welcome}
+              <div className="text-green-500 mb-6">
+                {translations[language].welcome}
+              </div>
             </motion.h2>
 
             <motion.div
@@ -252,9 +255,23 @@ function Home() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-md sm:text-lg md:text-xl space-y-1"
             >
-              <div>📅 {language === 'bn' ? dateString : currentTime.toDateString()}</div>
-              <div>📜 {translations[language].banglaDateLabel}: {getBanglaDate(currentTime)}</div>
-              <div>🕌 {translations[language].hijriDateLabel}: {getHijriDate(currentTime)}</div>
+              <div className=" space-x-2 mb-24">
+                <div className=''>🌍 {language === 'bn' ? 'বাংলাদেশ' : 'Bangladesh'}</div>
+                <div className=''>📅 {language === 'bn' ? dateString : currentTime.toDateString()}</div>
+                <div className="">
+                  <p className="text-lg font-medium text-white ">
+                    {translations[language].banglaDateLabel}: {getBanglaDate(currentTime, language)}
+                  </p>
+                  <p className="text-lg font-medium text-white">
+                    {translations[language].hijriDateLabel}: {getHijriDate(currentTime, language)}
+                  </p>
+                </div>
+
+                <p className="text-green-400 text-2xl italic mt-4">
+                  “إِنَّ مَعَ الْعُسْرِ يُسْرًا” <br />
+                  <span className="font-bold">{language === 'bn' ? '-নিশ্চয়ই কষ্টের সাথে রয়েছে স্বস্তি- ' : '— Surely, with hardship comes ease.'}</span>
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>
