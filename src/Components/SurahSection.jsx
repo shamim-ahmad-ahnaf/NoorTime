@@ -192,10 +192,9 @@ function SurahSection() {
         viewport={{ once: true }}
       >
         <h2 className="text-4xl font-bold text-emerald-700 border-b-4 border-emerald-200 inline-block pb-2">
-          {language === 'bn' ? '📖 ছোট সূরা সমূহ' : '📖 Short Surahs'}
+          {language === 'bn' ? '📖 সূরা সমূহ' : '📖 Short Surahs'}
         </h2>
       </motion.div>
-
       <div className="space-y-10">
         {surahs.map((surah, index) => (
           <motion.div

@@ -4,7 +4,7 @@ import {
   FaLinkedin,
   FaFacebook,
   FaEnvelope,
-  FaTwitter,
+  FaWhatsapp ,
   FaMapMarkerAlt,
   FaPhoneAlt,
 } from 'react-icons/fa';
@@ -88,6 +88,15 @@ function Footer() {
 
           {/* Social Icons */}
           <div className="flex space-x-5 text-xl">
+             <a
+               href="https://wa.me/8801748186766"
+               target="_blank"
+               rel="noreferrer"
+               aria-label="WhatsApp"
+               className="hover:text-gray-300 transition-transform transform hover:scale-110"
+             >
+               <FaWhatsapp />
+             </a>
             <a href="https://github.com/shamim-ahmad-ahnaf/NoorTime" target="_blank" rel="noreferrer" aria-label="GitHub"
               className="hover:text-gray-300 transition-transform transform hover:scale-110"><FaGithub /></a>
             <a href="https://www.linkedin.com/in/shamim-ahmad-772484331" target="_blank" rel="noreferrer" aria-label="LinkedIn"
@@ -96,9 +105,7 @@ function Footer() {
               className="hover:text-gray-300 transition-transform transform hover:scale-110"><FaFacebook /></a>
             <a href="shamimahmadahnaf@gmail.com" aria-label="Email"
               className="hover:text-gray-300 transition-transform transform hover:scale-110"><FaEnvelope /></a>
-            <a href="https://twitter.com/shamimahanf" target="_blank" rel="noreferrer" aria-label="Twitter"
-              className="hover:text-gray-300 transition-transform transform hover:scale-110"><FaTwitter /></a>
-          </div>
+           </div>
         </div>
       </div>
     </motion.footer>
