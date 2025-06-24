@@ -16,6 +16,7 @@ import Settings from './Components/Settings';
 import Calendar from './Components/Calendar';
 import IslamicQASection from './Components/IslamicQASection';
 import Privacy from './Components/Privacy';
+import IslamicArticlesPage from './Components/Articles';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/islamic-qa" element={<IslamicQASection />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/articles" element={<IslamicArticlesPage />} />
             </Routes>
           </div>
           <div className="p-4 flex justify-center">

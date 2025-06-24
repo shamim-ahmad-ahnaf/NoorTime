@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   FaBars, FaTimes, FaGlobe, FaHome, FaClock, FaPray, FaBookOpen, FaCalendarAlt,
   FaQuestionCircle, FaPhoneAlt, FaInfoCircle, FaLock, FaSearch,
-  FaGithub, FaLinkedin, FaFacebook, FaEnvelope, FaWhatsapp
+  FaGithub, FaLinkedin, FaFacebook, FaEnvelope, FaNewspaper, FaWhatsapp
 } from 'react-icons/fa';
 
 function Header() {
@@ -44,8 +44,10 @@ function Header() {
             <Link to="/prayer" className="hover:text-green-300">{language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}</Link>
             <Link to="/dua" className="hover:text-green-300">{language === 'bn' ? 'দোয়া' : 'Dua'}</Link>
             <Link to="/surah" className="hover:text-green-300">{language === 'bn' ? 'সূরা' : 'Surahs'}</Link>
+            <Link to="/articles" className="hover:text-green-300">{language === 'bn' ? 'প্রবন্ধ ও কবিতা' : 'Articles'}</Link>
             <Link to="/settings" className="hover:text-green-300">{language === 'bn' ? 'যোগাযোগ' : 'Contact'}</Link>
           </nav>
+
 
           {/* Desktop Language Switch */}
           <div className="hidden lg:flex items-center">
@@ -112,6 +114,7 @@ function Header() {
                 <Link onClick={toggleMenu} to="/" className="flex items-center gap-2 hover:text-green-300"><FaHome /> {language === 'bn' ? 'হোম' : 'Home'}</Link>
                 <Link onClick={toggleMenu} to="/prayer" className="flex items-center gap-2 hover:text-green-300"><FaClock /> {language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}</Link>
                 <Link onClick={toggleMenu} to="/dua" className="flex items-center gap-2 hover:text-green-300"><FaPray /> {language === 'bn' ? 'দোয়া' : 'Dua'}</Link>
+                <Link onClick={toggleMenu} to="/articles" className="flex items-center gap-2 hover:text-green-300"><FaNewspaper /> {language === 'bn' ? 'প্রবন্ধ ও কবিতা' : 'Articles'}</Link>
                 <Link onClick={toggleMenu} to="/surah" className="flex items-center gap-2 hover:text-green-300"><FaBookOpen /> {language === 'bn' ? 'সূরা' : 'Surahs'}</Link>
                 <Link onClick={toggleMenu} to="/tracker" className="flex items-center gap-2 hover:text-green-300"><FaCalendarAlt /> {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}</Link>
                 <Link onClick={toggleMenu} to="/calendar" className="flex items-center gap-2 hover:text-green-300"><FaCalendarAlt /> {language === 'bn' ? 'ইসলামিক ক্যালেন্ডার' : 'Islamic Calendar'}</Link>
