@@ -10,7 +10,8 @@ import {
   FaPhoneAlt,
   FaInfoCircle,
   FaLock,
-  FaPenFancy
+  FaPenFancy,
+  FaPuzzlePiece
 } from 'react-icons/fa';
 
 import { Link } from 'react-router-dom';
@@ -23,13 +24,14 @@ const features = [
   { icon: <FaPray className="text-4xl text-green-600" />, title: { bn: 'দোয়া', en: 'Duas' }, desc: { bn: 'প্রয়োজনীয় দোয়া পড়ুন ও মুখস্থ করুন এবং সঠিকভাবে আমল করুন।', en: 'Explore and memorize essential duas.' }, path: '/dua' },
   { icon: <FaBookOpen className="text-4xl text-green-600" />, title: { bn: 'সূরা', en: 'Surahs' }, desc: { bn: 'কুরআনের বিভিন্ন সূরা পড়তে ও শিখতে পারো।', en: "Read and learn Surahs from the Qur'an." }, path: '/surah' },
   { icon: <FaPenFancy className="text-4xl text-green-600" />, title: { bn: 'ইসলামি প্রবন্ধ', en: 'Islamic Articles' }, desc: { bn: 'বিভিন্ন ইসলামি প্রবন্ধ, কবিতা ও আলোচনার সংগ্রহ।', en: 'A collection of Islamic articles, poems, and discussions.' }, path: '/articles' },
+  { icon: <FaPuzzlePiece className="text-4xl text-green-600" />, title: { bn: 'ইসলামিক কুইজ', en: 'Islamic Quiz' }, desc: { bn: 'ইসলামিক প্রশ্নোত্তর খেলুন এবং আপনার জ্ঞান যাচাই করুন ।', en: 'Play quizzes to test your Islamic knowledge.' }, path: '/interactive' },
   { icon: <FaCalendarAlt className="text-4xl text-green-600" />, title: { bn: 'নামাজ ট্র্যাকার', en: 'Prayer Tracker' }, desc: { bn: 'নিয়মিত নামাজ পড়ার ট্র্যাক রাখতে সাহায্য করে।', en: 'Keep track of your daily prayers easily.' }, path: '/tracker' },
   { icon: <FaRegCalendarAlt className="text-4xl text-green-600" />, title: { bn: 'ইসলামিক ক্যালেন্ডার', en: 'Islamic Calendar' }, desc: { bn: 'হিজরি তারিখসহ ইসলামিক বিশেষ দিনগুলো জানুন।', en: 'Check Hijri dates and Islamic events.' }, path: '/calendar' },
   { icon: <FaQuestionCircle className="text-4xl text-green-600" />, title: { bn: 'প্রশ্নোত্তর', en: 'Islamic Q&A' }, desc: { bn: 'ইসলামিক প্রশ্নোত্তর পড়ুন ও শিখুন।', en: 'Explore and learn from Islamic Q&A.' }, path: '/islamic-qa' },
   { icon: <FaPhoneAlt className="text-4xl text-green-600" />, title: { bn: 'যোগাযোগ', en: 'Contact' }, desc: { bn: 'আমাদের সাথে যোগাযোগ করতে ক্লিক করুন।', en: 'Use the contact form to get in touch with us.' }, path: '/settings' },
   { icon: <FaInfoCircle className="text-4xl text-green-600" />, title: { bn: 'দ্বীনযুন সম্পর্কে', en: 'About DeenZone' }, desc: { bn: 'দ্বীনযুন সম্পর্কে জানুন এবং আমাদের লক্ষ্য দেখুন।', en: 'Learn about DeenZone and our mission.' }, path: '/about' },
   { icon: <FaLock className="text-4xl text-green-600" />, title: { bn: 'প্রাইভেসি পলিসি', en: 'Privacy Policy' }, desc: { bn: 'আমাদের প্রাইভেসি পলিসি সম্পর্কে জানুন।', en: 'Learn about our privacy policy.' }, path: '/privacy' },
-  
+ 
 
 ];
 
@@ -59,13 +61,12 @@ function Home() {
     const engDay = date.getDate();
     const engMonth = date.getMonth();
     const engYear = date.getFullYear();
-    const transitionDays = [14, 14, 14, 14, 14, 14, 15, 15, 15, 14, 14, 14]; // Updated
+    const transitionDays = [14, 14, 14, 14, 14, 14, 15, 15, 15, 14, 14, 14]; 
 
     let banglaDay = engDay - transitionDays[engMonth];
     let banglaMonthIndex = (engMonth + 9) % 12;
-    let banglaYear = engYear - 593; // Corrected year conversion
+    let banglaYear = engYear - 593; 
 
-    // Handle month change if day is negative
     if (banglaDay <= 0) {
       banglaMonthIndex = (banglaMonthIndex + 11) % 12;
       const prevMonthDays = [31, (engYear % 4 === 0 && engYear % 100 !== 0) || (engYear % 400 === 0) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -124,7 +125,7 @@ function Home() {
           </div>
         </div>
 
-        {/* Category Section */}
+       
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}

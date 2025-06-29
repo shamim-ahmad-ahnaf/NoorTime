@@ -570,19 +570,13 @@ const articles = [
   lang: "bn",
 }
 
-
-
-
 ];
 
 export default function IslamicArticlesPage() {
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("সব");
 
-   
     const categories = ["সব", ...new Set(articles.map(a => a.category))];
-
-    
     const filteredArticles = selectedCategory === "সব"
         ? articles
         : articles.filter(article => article.category === selectedCategory);
@@ -618,7 +612,7 @@ export default function IslamicArticlesPage() {
                 {filteredArticles.map(article => (
                     <div
                         key={article.id}
-                        className="bg-white border-1 border-green-700  rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300"
+                        className="bg-gradient-to-br from-green-100 to-white  border-1 border-green-700  rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300"
                     >
                         <p className="text-sm text-green-600 font-medium mb-1">{article.category}</p>
                         <h3 className="text-xl font-semibold text-green-800 mb-2">{article.title}</h3>
