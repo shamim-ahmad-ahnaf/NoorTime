@@ -18,6 +18,7 @@ import IslamicQASection from './Components/IslamicQASection';
 import Privacy from './Components/Privacy';
 import IslamicArticlesPage from './Components/Articles';
 import InteractiveIslamicPage from './Components/Interactive';
+import IslamicLibraryPage from './Components/IslamicLibraryPage';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/articles" element={<IslamicArticlesPage />} />
               <Route path="/interactive" element={<InteractiveIslamicPage />} />
+              <Route path="/library" element={<IslamicLibraryPage />} />
             </Routes>
           </div>
           <div className="p-4 flex justify-center">

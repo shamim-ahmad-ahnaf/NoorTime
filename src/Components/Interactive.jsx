@@ -128,7 +128,7 @@ function Quiz({ questions, onClose }) {
       if (index === questions[currentQ].answer) {
         setScore(score + 1);
       }
-      // ১ সেকেন্ড অপেক্ষা করে পরবর্তী প্রশ্নে যাবে
+      
       setTimeout(() => {
         handleNext();
       }, 100);

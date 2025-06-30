@@ -116,12 +116,15 @@ function Header() {
                 <Link onClick={toggleMenu} to="/dua" className="flex items-center gap-2 hover:text-green-300"><FaPray /> {language === 'bn' ? 'দোয়া' : 'Dua'}</Link>
                 <Link onClick={toggleMenu} to="/articles" className="flex items-center gap-2 hover:text-green-300"><FaNewspaper /> {language === 'bn' ? 'প্রবন্ধ ও কবিতা' : 'Articles'}</Link>
                 <Link onClick={toggleMenu} to="/surah" className="flex items-center gap-2 hover:text-green-300"><FaBookOpen /> {language === 'bn' ? 'সূরা' : 'Surahs'}</Link>
+                <Link onClick={toggleMenu} to="/library" className="flex items-center gap-2 hover:text-green-300"><FaBookOpen /> {language === 'bn' ? 'ইসলামিক লাইব্রেরি' : 'Islamic Library'}</Link>
+                <Link onClick={toggleMenu} to="/interactive" className="flex items-center gap-2 hover:text-green-300"><FaQuestionCircle /> {language === 'bn' ? 'ইসলামিক কুইজ' : 'Islamic Quiz'}</Link>
                 <Link onClick={toggleMenu} to="/tracker" className="flex items-center gap-2 hover:text-green-300"><FaCalendarAlt /> {language === 'bn' ? 'নামাজ ট্র্যাকার' : 'Prayer Tracker'}</Link>
                 <Link onClick={toggleMenu} to="/calendar" className="flex items-center gap-2 hover:text-green-300"><FaCalendarAlt /> {language === 'bn' ? 'ইসলামিক ক্যালেন্ডার' : 'Islamic Calendar'}</Link>
                 <Link onClick={toggleMenu} to="/islamic-qa" className="flex items-center gap-2 hover:text-green-300"><FaQuestionCircle /> {language === 'bn' ? 'প্রশ্নোত্তর' : 'Islamic Q&A'}</Link>
                 <Link onClick={toggleMenu} to="/settings" className="flex items-center gap-2 hover:text-green-300"><FaPhoneAlt /> {language === 'bn' ? 'যোগাযোগ' : 'Contact'}</Link>
                 <Link onClick={toggleMenu} to="/about" className="flex items-center gap-2 hover:text-green-300"><FaInfoCircle /> {language === 'bn' ? 'দ্বীনযুন সম্পর্কে' : 'About DeenZone'}</Link>
                 <Link onClick={toggleMenu} to="/privacy" className="flex items-center gap-2 hover:text-green-300"><FaLock /> {language === 'bn' ? 'প্রাইভেসি পলিসি' : 'Privacy Policy'}</Link>
+              
               </div>
 
               {/* Search Bar */}
