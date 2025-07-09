@@ -17,6 +17,7 @@ import {
 import { Link } from 'react-router-dom';
 import { toHijri } from 'hijri-date-converter';
 import { motion } from 'framer-motion';
+import AnalogClock from '../Context/Analog';
 
 const features = [
 
@@ -32,7 +33,7 @@ const features = [
   { icon: <FaPhoneAlt className="text-4xl text-green-600" />, title: { bn: 'যোগাযোগ', en: 'Contact' }, desc: { bn: 'আমাদের সাথে যোগাযোগ করতে ক্লিক করুন।', en: 'Use the contact form to get in touch with us.' }, path: '/settings' },
   { icon: <FaInfoCircle className="text-4xl text-green-600" />, title: { bn: 'দ্বীনযুন সম্পর্কে', en: 'About DeenZone' }, desc: { bn: 'দ্বীনযুন সম্পর্কে জানুন এবং আমাদের লক্ষ্য দেখুন।', en: 'Learn about DeenZone and our mission.' }, path: '/about' },
   { icon: <FaLock className="text-4xl text-green-600" />, title: { bn: 'প্রাইভেসি পলিসি', en: 'Privacy Policy' }, desc: { bn: 'আমাদের প্রাইভেসি পলিসি সম্পর্কে জানুন।', en: 'Learn about our privacy policy.' }, path: '/privacy' },
- 
+
 
 ];
 
@@ -62,11 +63,11 @@ function Home() {
     const engDay = date.getDate();
     const engMonth = date.getMonth();
     const engYear = date.getFullYear();
-    const transitionDays = [14, 14, 14, 14, 14, 14, 15, 15, 15, 14, 14, 14]; 
+    const transitionDays = [14, 14, 14, 14, 14, 14, 15, 15, 15, 14, 14, 14];
 
     let banglaDay = engDay - transitionDays[engMonth];
     let banglaMonthIndex = (engMonth + 9) % 12;
-    let banglaYear = engYear - 593; 
+    let banglaYear = engYear - 593;
 
     if (banglaDay <= 0) {
       banglaMonthIndex = (banglaMonthIndex + 11) % 12;
@@ -99,15 +100,15 @@ function Home() {
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
-
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6 text-center space-y-6">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-green-400 drop-shadow-md">
               {translations[language].welcome}
             </h2>
-
             <div className="bg-white/8 backdrop-blur-sm p-4 rounded-xl shadow-md w-fit space-y-2">
               <div className="text-2xl sm:text-3xl font-semibold">🕒 {timeString}</div>
               <div className="text-lg mt-5">
+
+                <AnalogClock />
                 🌍 {language === 'bn' ? 'বাংলাদেশ' : 'Bangladesh'}<br />
                 📅 {language === 'bn' ? dateString : currentTime.toDateString()}
               </div>
@@ -126,7 +127,6 @@ function Home() {
           </div>
         </div>
 
-       
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
@@ -149,17 +149,23 @@ function Home() {
                 viewport={{ once: true }}
               >
                 <Link to={feature.path} className="block">
-                  <div className="bg-gradient-to-br from-green-100 to-white border border-green-200 p-6 rounded-xl shadow-md hover:shadow-xl transition">
+                  <div className="bg-gradient-to-br from-green-100 to-white border-4  border-green-200/50 p-6 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 ease-in-out">
+
                     <div className="flex items-center justify-center mb-4">
-                      {feature.icon}
+                      <div className="bg-green-100 p-4 rounded-full shadow-inner ring-2 ring-green-200">
+                        {feature.icon}
+                      </div>
                     </div>
-                    <h3 className="text-xl font-semibold text-green-700 text-center mb-2">
+
+                    <h3 className="text-lg sm:text-xl font-bold text-green-700 text-center mb-2 tracking-wide">
                       {feature.title[language]}
                     </h3>
-                    <p className="text-gray-700 text-center mb-4">
+
+                    <p className="text-gray-600 text-center mb-4 text-sm leading-relaxed">
                       {feature.desc[language]}
                     </p>
-                    <div className="text-sm text-green-600 text-center font-medium hover:underline">
+
+                    <div className="text-sm text-green-600 text-center font-medium hover:underline transition">
                       {translations[language].learnMore}
                     </div>
                   </div>
@@ -167,6 +173,7 @@ function Home() {
               </motion.div>
             ))}
           </div>
+
         </div>
       </div>
 

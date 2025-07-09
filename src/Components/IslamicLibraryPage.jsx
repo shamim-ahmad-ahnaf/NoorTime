@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import RevealOnScroll from "../Context/RevealOnScroll";
 
 const books = [
     {
@@ -115,6 +116,7 @@ export default function IslamicLibraryPage() {
     const categories = ["সব", ...new Set(books.map((book) => book.category))];
 
     return (
+        <RevealOnScroll>
         <div className="min-h-screen bg-green-50 px-4 py-12 mt-20">
             <h1 className="text-4xl font-bold text-center text-green-700 mb-8">📚 ইসলামিক লাইব্রেরি</h1>
 
@@ -273,7 +275,7 @@ export default function IslamicLibraryPage() {
                     </div>
                 </div>
             )}
-
         </div>
+        </RevealOnScroll>
     );
 }
