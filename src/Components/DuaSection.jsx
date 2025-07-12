@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../Context/LanguageContext';
 import { ClipboardDocumentIcon, ShareIcon } from '@heroicons/react/24/outline';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
+import Fuse from 'fuse.js';
 
 function DuaSection() {
   const { language } = useLanguage();
@@ -16,6 +17,8 @@ function DuaSection() {
       copied: 'কপি করা হয়েছে!',
       copyMeaningPrefix: 'অর্থ: ',
       notSupported: 'এই ব্রাউজারে শেয়ার সাপোর্টেড নয়।',
+      searchPlaceholder: 'অনুসন্ধান করুন...',
+      noResults: 'কিছু পাওয়া যায়নি',
     },
     en: {
       categoryTitle: '📖 Dua Categories',
@@ -24,8 +27,12 @@ function DuaSection() {
       copied: 'Copied!',
       copyMeaningPrefix: 'Meaning: ',
       notSupported: 'Sharing not supported on this browser.',
+      searchPlaceholder: 'Search...',
+      noResults: 'No results found',
     },
   };
+
+
 
   const categoryTitles = {
     bn: {
@@ -548,7 +555,32 @@ function DuaSection() {
 
   };
 
+
+  // Fuse.js এর জন্য ডেটা তৈরি
+  const fuseData = useMemo(() => {
+    let list = [];
+    Object.entries(duasByCategory).forEach(([categoryKey, duas]) => {
+      duas.forEach((dua) => {
+        list.push({
+          categoryKey,
+          title: dua.title[language === 'bn' ? 'bn' : 'en'],
+          dua,
+        });
+      });
+    });
+    return list;
+  }, [duasByCategory, language]);
+
+  const fuse = useMemo(() => {
+    return new Fuse(fuseData, {
+      keys: ['title'],
+      threshold: 0.3,
+    });
+  }, [fuseData]);
+
   const [selectedCategory, setSelectedCategory] = useState('morning_evening');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -575,10 +607,33 @@ function DuaSection() {
     }
   };
 
-  return (
+  // সার্চ ইনপুট হ্যান্ডলার
+  const handleSearch = (e) => {
+    const val = e.target.value;
+    setSearchTerm(val);
 
+    if (val.trim() === '') {
+      setSearchResults(null);
+    } else {
+      const results = fuse.search(val);
+      if (results.length === 0) {
+        setSearchResults([]);
+      } else {
+        setSearchResults(results.map(r => r.item));
+      }
+    }
+  };
+
+  // সার্চ রেজাল্ট ক্লিক করলে
+  const handleResultClick = (categoryKey, dua) => {
+    setSelectedCategory(categoryKey);
+    setSearchTerm('');
+    setSearchResults(null);
+  };
+
+  return (
     <motion.div
-      className="bg-white px-4 py-8 md:py-12 max-w-7xl mx-auto mt-12"
+      className="px-4 py-8 mx-auto mt-12 bg-white md:py-12 max-w-7xl"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -586,7 +641,7 @@ function DuaSection() {
       <ToastContainer />
 
       <motion.h2
-        className="text-3xl font-bold text-green-600 mb-8 text-center"
+        className="mb-8 text-3xl font-bold text-center text-green-600"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -594,6 +649,37 @@ function DuaSection() {
         {labels[language].categoryTitle}
       </motion.h2>
 
+      {/* Search Box */}
+      <div className="relative max-w-md mx-auto mb-8">
+        <input
+          type="text"
+          placeholder={labels[language].searchPlaceholder}
+          value={searchTerm}
+          onChange={handleSearch}
+          className="px-4 py-2 ml-12 border border-green-300 rounded-md w-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+        />
+        {searchResults !== null && (
+          <div className="absolute z-10 w-full mt-1 overflow-auto bg-white border border-green-300 rounded-lg shadow-lg max-h-60">
+            {searchResults.length === 0 ? (
+              <p className="p-3 text-center text-gray-500">
+                {labels[language].noResults}
+              </p>
+            ) : (
+              searchResults.map(({ categoryKey, title, dua }, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleResultClick(categoryKey, dua)}
+                  className="w-full px-4 py-2 text-left hover:bg-green-100 focus:bg-green-100"
+                >
+                  {title}
+                </button>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Category Buttons */}
       <motion.div
         className="flex flex-wrap justify-center gap-3 mb-10"
         initial="hidden"
@@ -611,8 +697,8 @@ function DuaSection() {
           <motion.button
             key={key}
             className={`py-2 px-4 rounded-full text-sm md:text-base font-medium border transition ${selectedCategory === key
-                ? 'bg-green-600 text-white shadow'
-                : 'bg-green-100 text-green-800 hover:bg-green-200'
+              ? 'bg-green-600 text-white shadow'
+              : 'bg-green-100 text-green-800 hover:bg-green-200'
               }`}
             onClick={() => setSelectedCategory(key)}
             variants={{
@@ -625,6 +711,7 @@ function DuaSection() {
         ))}
       </motion.div>
 
+      {/* Dua Cards */}
       <motion.div
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         initial="hidden"
@@ -641,17 +728,17 @@ function DuaSection() {
         {duasByCategory[selectedCategory]?.map((dua, index) => (
           <motion.div
             key={index}
-            className="bg-green-50 p-6 rounded-xl border border-green-200 shadow hover:shadow-lg transition"
+            className="p-6 transition border border-green-200 shadow bg-green-50 rounded-xl hover:shadow-lg"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <h3 className="text-center text-xl font-semibold text-green-700 mb-4">
+            <h3 className="mb-4 text-xl font-semibold text-center text-green-700">
               {dua.title[language]}
             </h3>
-            <div className="text-center space-y-2">
-              <p className="text-2xl md:text-3xl font-arabic leading-relaxed text-gray-800">
+            <div className="space-y-2 text-center">
+              <p className="text-2xl leading-relaxed text-gray-800 md:text-3xl font-arabic">
                 {dua.arabic}
               </p>
               <p className="text-base text-gray-700">{dua.bangla}</p>
@@ -661,14 +748,14 @@ function DuaSection() {
               <div className="flex justify-center gap-4 mt-4">
                 <button
                   onClick={() => copyToClipboard(dua.arabic)}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded shadow"
+                  className="flex items-center gap-2 px-2 py-1 text-white bg-green-600 rounded shadow hover:bg-green-700"
                 >
                   <ClipboardDocumentIcon className="w-5 h-5" />
                   {labels[language].copy}
                 </button>
                 <button
                   onClick={() => shareDua(dua.arabic)}
-                  className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-2 py-1 rounded shadow"
+                  className="flex items-center gap-2 px-2 py-1 text-white bg-purple-600 rounded shadow hover:bg-purple-700"
                 >
                   <ShareIcon className="w-5 h-5" />
                   {labels[language].share}

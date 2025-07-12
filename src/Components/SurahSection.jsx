@@ -178,20 +178,20 @@ function SurahSection() {
 
   return (
     <motion.div
-      className="bg-white py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-14"
+      className="px-4 py-16 mx-auto bg-white sm:px-6 lg:px-8 max-w-7xl mt-14"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
       <motion.div
-        className="text-center mb-12"
+        className="mb-12 text-center"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl font-bold text-emerald-700 border-b-4 border-emerald-200 inline-block pb-2">
+        <h2 className="inline-block pb-2 text-4xl font-bold border-b-4 text-emerald-700 border-emerald-200">
           {language === 'bn' ? '📖 সূরা সমূহ' : '📖 Short Surahs'}
         </h2>
       </motion.div>
@@ -199,18 +199,18 @@ function SurahSection() {
         {surahs.map((surah, index) => (
           <motion.div
             key={index}
-            className="bg-gradient-to-br from-emerald-50 to-white border-l-4 border-emerald-500 rounded-lg p-6 shadow-md hover:shadow-lg transition duration-300"
+            className="p-6 transition duration-300 border-l-4 rounded-lg shadow-md bg-gradient-to-br from-emerald-50 to-white border-emerald-500 hover:shadow-lg"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            <h3 className="text-2xl font-semibold text-emerald-700 mb-4 border-b border-emerald-300 pb-2">
+            <h3 className="pb-2 mb-4 text-2xl font-semibold border-b text-emerald-700 border-emerald-300">
               {surah.title[language]}
             </h3>
 
             <div className="mb-4">
-              <p className="text-right text-3xl text-gray-800 font-arabic whitespace-pre-line leading-loose">
+              <p className="text-3xl leading-loose text-right text-gray-800 whitespace-pre-line font-arabic">
                 {surah.arabic}
               </p>
             </div>
@@ -225,7 +225,7 @@ function SurahSection() {
             </div>
 
             <div>
-              <p className="text-gray-600 text-sm italic">
+              <p className="text-sm italic text-gray-600">
                 <span className="font-bold text-emerald-600">
                   {language === 'bn' ? 'অর্থ:' : 'Meaning:'}
                 </span>{' '}

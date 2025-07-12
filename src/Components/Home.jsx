@@ -100,13 +100,13 @@ function Home() {
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6 text-center space-y-6">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-green-400 drop-shadow-md">
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-6 space-y-6 text-center text-white">
+            <h2 className="text-4xl font-extrabold text-green-400 sm:text-5xl md:text-6xl drop-shadow-md">
               {translations[language].welcome}
             </h2>
-            <div className="bg-white/8 backdrop-blur-sm p-4 rounded-xl shadow-md w-fit space-y-2">
-              <div className="text-2xl sm:text-3xl font-semibold">🕒 {timeString}</div>
-              <div className="text-lg mt-5">
+            <div className="p-4 space-y-2 shadow-md bg-white/8 backdrop-blur-sm rounded-xl w-fit">
+              <div className="text-2xl font-semibold sm:text-3xl">🕒 {timeString}</div>
+              <div className="mt-5 text-lg">
 
                 <AnalogClock />
                 🌍 {language === 'bn' ? 'বাংলাদেশ' : 'Bangladesh'}<br />
@@ -118,7 +118,7 @@ function Home() {
               </div>
             </div>
 
-            <p className="text-green-400 text-2xl italic mt-6 max-w-xl leading-relaxed">
+            <p className="max-w-xl mt-6 text-2xl italic leading-relaxed text-green-400">
               “إِنَّ مَعَ الْعُسْرِ يُسْرًا”<br />
               <span className="font-bold">
                 {language === 'bn' ? '-নিশ্চয়ই কষ্টের সাথে রয়েছে স্বস্তি-' : '— Surely, with hardship comes ease.'}
@@ -127,18 +127,18 @@ function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="px-4 mx-auto mt-16 max-w-7xl sm:px-6 lg:px-8">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl text-green-600 font-bold text-center mb-10 underline"
+            className="mb-10 text-4xl font-bold text-center text-green-600 underline"
           >
             {translations[language].categoryTitle}
           </motion.h1>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, idx) => (
               <motion.div
                 key={idx}
@@ -149,23 +149,23 @@ function Home() {
                 viewport={{ once: true }}
               >
                 <Link to={feature.path} className="block">
-                  <div className="bg-gradient-to-br from-green-100 to-white border-4  border-green-200/50 p-6 rounded-2xl shadow-sm hover:shadow-lg transition duration-300 ease-in-out">
+                  <div className="p-6 transition duration-300 ease-in-out border-4 shadow-sm bg-gradient-to-br from-green-100 to-white border-green-200/50 rounded-2xl hover:shadow-lg">
 
                     <div className="flex items-center justify-center mb-4">
-                      <div className="bg-green-100 p-4 rounded-full shadow-inner ring-2 ring-green-200">
+                      <div className="p-4 bg-green-100 rounded-full shadow-inner ring-2 ring-green-200">
                         {feature.icon}
                       </div>
                     </div>
 
-                    <h3 className="text-lg sm:text-xl font-bold text-green-700 text-center mb-2 tracking-wide">
+                    <h3 className="mb-2 text-lg font-bold tracking-wide text-center text-green-700 sm:text-xl">
                       {feature.title[language]}
                     </h3>
 
-                    <p className="text-gray-600 text-center mb-4 text-sm leading-relaxed">
+                    <p className="mb-4 text-sm leading-relaxed text-center text-gray-600">
                       {feature.desc[language]}
                     </p>
 
-                    <div className="text-sm text-green-600 text-center font-medium hover:underline transition">
+                    <div className="text-sm font-medium text-center text-green-600 transition hover:underline">
                       {translations[language].learnMore}
                     </div>
                   </div>
@@ -173,10 +173,9 @@ function Home() {
               </motion.div>
             ))}
           </div>
-
         </div>
+        
       </div>
-
     </motion.div>
   );
 }
