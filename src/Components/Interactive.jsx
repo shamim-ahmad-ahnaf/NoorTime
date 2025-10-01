@@ -77,20 +77,21 @@ const quizTopics = {
     { question: "মাসায়েল বলতে কী বোঝায়?", options: ["সমস্যা ও সমাধান", "ইবাদত", "স্মরণ"], answer: 0 },
     { question: "ঋতুবতী মহিলার নামাজ পড়া কি জরুরি?", options: ["হ্যাঁ", "না", "মাঝে মাঝে"], answer: 1 },
     { question: "দোয়া কবুল হওয়ার প্রধান শর্ত কী?", options: ["বিশ্বাস ও ভরসা", "দ্রুত পড়া", "উচ্চ কণ্ঠে পড়া"], answer: 0 },
-    { question: "নামাজের পরে কোন দোয়া পড়া উত্তম?", options: ["আস্তাগফিরুল্লাহ", "দোয়া", "তাহলীল"], answer: 1 },
+    { question: "নামাজের পরে কোন দোয়া পড়া উত্তম?", options: ["আস্তাগফিরুল্লাহ", "দোয়া", "তাহলীল"], answer: 0 },
     { question: "দোয়া বেশি কবুল হয় কখন?", options: ["রাতের শেষ অংশে", "জুমার দিন", "ঈদের দিন"], answer: 0 },
     { question: "ইফতারের সময় কোন দোয়া পড়া হয়?", options: ["اللهم لك صمت", "سبحان الله", "الحمد لله"], answer: 0 },
   ],
 
-  "⚰️ কবর ও আখিরাত": [
-    { question: "কবর প্রশ্ন কে করে?", options: ["মানুষ", "ফেরেশতা", "জিন"], answer: 1 },
-    { question: "কে জান্নাত ও জাহান্নামের ফয়সালা দেবেন?", options: ["নবী", "আল্লাহ", "ফেরেশতা"], answer: 1 },
-    { question: "পুনরুত্থান হবে কবে?", options: ["কেয়ামতের দিন", "জানাজার সময়", "জুমার দিন"], answer: 0 },
-    { question: "কবরের মাজারে তাবু স্থাপন করা যাবে কি?", options: ["হ্যাঁ", "না", "শর্তসাপেক্ষে"], answer: 1 },
-    { question: "আখিরাতে নেকামতদের পুরস্কার কী?", options: ["জান্নাত", "জাহান্নাম", "ফেরেশতাদের সঙ্গ"], answer: 0 },
-    { question: "জান্নাতের দরজা কয়টি?", options: ["৭", "৫", "১০"], answer: 0 },
-    { question: "মুমিনের মৃত্যু পরবর্তী অবস্থা কী?", options: ["কবরের জীবন", "পৃথিবীতে ফিরে আসা", "সরাসরি জান্নাতে যাওয়া"], answer: 0 },
+  "🤲 দোয়া ও মাসায়েল": [
+    { question: "ইফতারের সময় কোন দোয়া পড়া হয়?", options: ["اللهم لك صمت", "سبحان الله", "الحمد لله"], answer: 0 },
+    { question: "মাসায়েল বলতে কী বোঝায়?", options: ["সমস্যা ও সমাধান", "ইবাদত", "স্মরণ"], answer: 0 },
+    { question: "ঋতুবতী মহিলার নামাজ পড়া কি জরুরি?", options: ["হ্যাঁ", "না", "মাঝে মাঝে"], answer: 1 },
+    { question: "দোয়া কবুল হওয়ার প্রধান শর্ত কী?", options: ["বিশ্বাস ও ভরসা", "দ্রুত পড়া", "উচ্চ কণ্ঠে পড়া"], answer: 0 },
+    { question: "নামাজের পরে কোন দোয়া পড়া উত্তম?", options: ["আস্তাগফিরুল্লাহ", "দোয়া", "তাহলীল"], answer: 0 },
+    { question: "দোয়া বেশি কবুল হয় কখন?", options: ["রাতের শেষ অংশে", "জুমার দিন", "ঈদের দিন"], answer: 0 },
+    { question: "যাত্রা শুরু করার আগে কোন দোয়া পড়া উত্তম?", options: ["দোয়া ইস্তিখারা", "দোয়া যাত্রা", "দোয়া কুরআন"], answer: 1 },
   ],
+
 
   "🏞️ জান্নাত ও জাহান্নাম": [
     { question: "জান্নাতিদের প্রথম খাবার কী হবে?", options: ["মধু", "মাছের কলিজা", "দুধ"], answer: 1 },
@@ -105,14 +106,15 @@ const quizTopics = {
 
 
 function Quiz({ questions, onClose }) {
-  const [currentQ, setCurrentQ] = React.useState(0);
-  const [selected, setSelected] = React.useState(null);
-  const [score, setScore] = React.useState(0);
-  const [showScore, setShowScore] = React.useState(false);
-  const [timeLeft, setTimeLeft] = React.useState(15);
-  const timerRef = React.useRef();
+  const [currentQ, setCurrentQ] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
+  const [score, setScore] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(10);
+  const timerRef = useRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (showScore) return;
     if (timeLeft === 0) {
       handleNext();
@@ -125,24 +127,25 @@ function Quiz({ questions, onClose }) {
   const handleAnswer = (index) => {
     if (selected === null) {
       setSelected(index);
+      const newSelectedAnswers = [...selectedAnswers];
+      newSelectedAnswers[currentQ] = index;
+      setSelectedAnswers(newSelectedAnswers);
+
+      // points যোগ করা, যদি points না থাকে default 1
       if (index === questions[currentQ].answer) {
-        setScore(score + 1);
+        const qPoints = questions[currentQ].points || 6;
+        setScore(score + qPoints);
       }
-      
-      setTimeout(() => {
-        handleNext();
-      }, 100);
+
+      setTimeout(() => handleNext(), 700);
     }
   };
 
   const handleNext = () => {
     setSelected(null);
-    setTimeLeft(15);
-    if (currentQ + 1 < questions.length) {
-      setCurrentQ(currentQ + 1);
-    } else {
-      setShowScore(true);
-    }
+    setTimeLeft(10);
+    if (currentQ + 1 < questions.length) setCurrentQ(currentQ + 1);
+    else setShowScore(true);
   };
 
   const restartQuiz = () => {
@@ -150,74 +153,113 @@ function Quiz({ questions, onClose }) {
     setSelected(null);
     setScore(0);
     setShowScore(false);
-    setTimeLeft(15);
+    setTimeLeft(10);
+    setSelectedAnswers(Array(questions.length).fill(null));
   };
 
+  const progressPercent = (timeLeft / 10) * 100;
+
+  // totalPoints গণনা
+  const totalPoints = questions.reduce((sum, q) => sum + (q.points || 1), 0);
+
   return (
-     <RevealOnScroll>
-    <div className="max-w-xl mx-auto bg-white rounded-lg p-6 shadow-lg relative">
-      <button
-        className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl"
-        onClick={onClose}
-        aria-label="Close Quiz"
-      >
-        &times;
-      </button>
+    <RevealOnScroll>
+      <div className="relative max-w-xl p-6 mx-auto bg-white rounded-lg shadow-lg">
+        <button
+          className="absolute text-2xl text-gray-500 top-2 right-2 hover:text-red-500"
+          onClick={onClose}
+          aria-label="Close Quiz"
+        >
+          &times;
+        </button>
 
-      {!showScore ? (
-        <>
-          <h3 className="text-2xl font-bold text-green-700 mb-4">
-            প্রশ্ন {currentQ + 1} / {questions.length}
-          </h3>
-          <p className="mb-4 text-gray-800">{questions[currentQ].question}</p>
+        {!showScore ? (
+          <>
+            <h3 className="mb-4 text-2xl font-bold text-green-700">
+              প্রশ্ন {currentQ + 1} / {questions.length}
+            </h3>
+            <p className="mb-4 text-gray-800">{questions[currentQ].question}</p>
 
-          <div className="space-y-3">
-            {questions[currentQ].options.map((opt, i) => {
-              const isCorrect = i === questions[currentQ].answer;
-              const isSelected = i === selected;
-
-              let bgColor = "bg-white hover:bg-green-100";
-              if (selected !== null) {
-                if (isCorrect) bgColor = "bg-green-300";
-                else if (isSelected) bgColor = "bg-red-300";
-                else bgColor = "bg-white";
-              }
-
-              return (
-                <button
-                  key={i}
-                  disabled={selected !== null}
-                  onClick={() => handleAnswer(i)}
-                  className={`w-full text-left px-4 py-2 rounded border border-gray-300 transition ${bgColor}`}
-                >
-                  {opt}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="flex justify-between items-center mt-6">
-            <div className="text-lg font-semibold text-gray-700">
-              সময় বাকি: <span className="text-red-600">{timeLeft}s</span>
+            <div className="space-y-3">
+              {questions[currentQ].options.map((opt, i) => {
+                const isCorrect = i === questions[currentQ].answer;
+                const isSelected = i === selected;
+                let bgColor = "bg-white hover:bg-green-100";
+                if (selected !== null) {
+                  if (isCorrect) bgColor = "bg-green-300";
+                  else if (isSelected) bgColor = "bg-red-300";
+                }
+                return (
+                  <button
+                    key={i}
+                    disabled={selected !== null}
+                    onClick={() => handleAnswer(i)}
+                    className={`w-full text-left px-4 py-2 rounded border border-gray-300 transition ${bgColor}`}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
             </div>
-           
+
+            <div className="mt-6">
+              <div className="flex justify-between mb-1">
+                <span className="text-lg font-semibold text-gray-700">
+                  সময় বাকি: <span className="text-red-600">{timeLeft}s</span>
+                </span>
+                <span className="text-lg font-semibold text-gray-700">
+                  স্কোর: {score} / {totalPoints}
+                </span>
+              </div>
+              <div className="w-full h-3 bg-gray-200 rounded">
+                <div
+                  className="h-3 transition-all duration-500 bg-green-500 rounded"
+                  style={{ width: `${progressPercent}%` }}
+                ></div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="text-center">
+            <h3 className="mb-6 text-3xl font-bold text-green-700">কুইজ শেষ</h3>
+            <p className="mb-4 text-lg">
+              আপনার মোট স্কোর: {score} / {totalPoints}
+            </p>
+
+            <div className="max-w-xl mx-auto mt-6 space-y-4 text-left">
+              {questions.map((q, idx) => {
+                const userAnswer = selectedAnswers[idx];
+                const correctAnswer = q.answer;
+                const isCorrect = userAnswer === correctAnswer;
+                return (
+                  <div key={idx} className="p-3 border rounded-lg">
+                    <p className="font-semibold">{idx + 1}. {q.question}</p>
+                    <p>
+                      আপনার উত্তর:{" "}
+                      <span className={isCorrect ? "text-green-600" : "text-red-600"}>
+                        {userAnswer !== null ? q.options[userAnswer] : "উত্তর দেয়া হয়নি"}
+                      </span>
+                    </p>
+                    {!isCorrect && (
+                      <p className="text-blue-600">
+                        সঠিক উত্তর: {q.options[correctAnswer]}
+                      </p>
+                    )}
+                    <p>পয়েন্ট: {isCorrect ? q.points || 1 : 0}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={restartQuiz}
+              className="px-6 py-2 mt-6 text-white bg-green-600 rounded hover:bg-green-700"
+            >
+              আবার চেষ্টা করুন
+            </button>
           </div>
-        </>
-      ) : (
-        <div className="text-center">
-          <h3 className="text-3xl font-bold text-green-700 mb-6">কুইজ শেষ</h3>
-          <p className="text-lg mb-4">
-            আপনার স্কোর: {score} / {questions.length}
-          </p>
-          <button
-            onClick={restartQuiz}
-            className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
-          >
-            আবার চেষ্টা করুন
-          </button>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </RevealOnScroll>
   );
 }
@@ -226,39 +268,51 @@ export default function IslamicQuizPage() {
   const [activeTopic, setActiveTopic] = useState(null);
 
   return (
-      <RevealOnScroll>
-    <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-50 px-4 py-10 mt-16">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-green-700 mb-12">
-        📚 ইসলামিক কুইজ সেন্টার
-      </h1>
+    <RevealOnScroll>
+      <div className="min-h-screen px-4 py-16 mt-12 bg-gradient-to-br from-green-50 via-white to-green-100">
+        {/* Header */}
+        <h1 className="flex items-center justify-center gap-3 mb-12 text-4xl font-extrabold tracking-wide text-center text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-green-500 to-green-700 md:text-5xl drop-shadow-md">
 
-      {!activeTopic ? (
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {Object.keys(quizTopics).map((topic, idx) => (
-            <div
-              key={idx}
-              onClick={() => setActiveTopic(topic)}
-              className="bg-white border border-green-600 hover:border-green-400 shadow hover:shadow-xl transition-all duration-300 rounded-2xl p-6 cursor-pointer group"
-            >
-              <h2 className="text-xl md:text-2xl font-semibold text-green-700 group-hover:text-green-800 transition">
-                {topic}
-              </h2>
-              <p className="text-sm text-gray-500 mt-2">
-                এই বিষয়ের প্রশ্নে নিজের জ্ঞান যাচাই করুন।
-              </p>
-              <div className="mt-4 text-sm text-green-600 group-hover:underline">
-                👉 শুরু করুন
+          📚ইসলামিক কুইজ সেন্টার
+        </h1>
+
+
+
+        {/* Topic Section */}
+        {!activeTopic ? (
+          <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3">
+            {Object.keys(quizTopics).map((topic, idx) => (
+              <div
+                key={idx}
+                onClick={() => setActiveTopic(topic)}
+                className="relative overflow-hidden transition-transform duration-300 bg-white border-2 border-green-300 shadow-md cursor-pointer rounded-2xl hover:shadow-xl hover:-translate-y-2 hover:border-green-400 group"
+              >
+                {/* Animated Border Glow */}
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-r from-green-400 to-green-600 group-hover:opacity-20"></div>
+
+                {/* Inner Content */}
+                <div className="relative z-10 p-6">
+                  <h2 className="text-xl font-bold text-green-700 transition-colors duration-300 group-hover:text-green-800 md:text-2xl">
+                    {topic}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                    এই বিষয়ের প্রশ্নে নিজের জ্ঞান যাচাই করুন।
+                  </p>
+                  <div className="inline-block px-5 py-2 mt-6 text-sm font-medium text-green-700 transition-colors duration-300 bg-green-100 rounded-lg group-hover:bg-green-600 group-hover:text-white">
+                    👉 শুরু করুন
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <Quiz
-          questions={quizTopics[activeTopic]}
-          onClose={() => setActiveTopic(null)}
-        />
-      )}
-    </div>
+            ))}
+          </div>
+        ) : (
+          <Quiz
+            questions={quizTopics[activeTopic]}
+            onClose={() => setActiveTopic(null)}
+          />
+        )}
+      </div>
     </RevealOnScroll>
+
   );
 }

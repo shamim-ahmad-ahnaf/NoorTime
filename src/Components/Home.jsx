@@ -117,7 +117,6 @@ function Home() {
                 {translations[language].hijriDateLabel}: {getHijriDate(currentTime, language)}
               </div>
             </div>
-
             <p className="max-w-xl mt-6 text-2xl italic leading-relaxed text-green-400">
               “إِنَّ مَعَ الْعُسْرِ يُسْرًا”<br />
               <span className="font-bold">
@@ -174,7 +173,6 @@ function Home() {
             ))}
           </div>
         </div>
-        
       </div>
     </motion.div>
   );
