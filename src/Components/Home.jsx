@@ -38,8 +38,8 @@ const features = [
 ];
 
 const translations = {
-  bn: { banglaDateLabel: 'বাংলা', hijriDateLabel: 'হিজরি', categoryTitle: 'ক্যাটাগরি সমূহ', learnMore: 'আরও জানুন', welcome: 'দ্বীনযুনে আপনাকে স্বাগতম' },
-  en: { banglaDateLabel: 'Bangla', hijriDateLabel: 'Hijri', categoryTitle: 'Categories', learnMore: 'Learn More', welcome: 'Welcome to DeenZone' },
+  bn: { banglaDateLabel: 'বাংলা', hijriDateLabel: 'হিজরি', categoryTitle: 'ক্যাটাগরি সমূহ', learnMore: 'আরও জানুন', welcome: 'ইসলামিক জ্ঞান ও জীবনের দিশা' },
+  en: { banglaDateLabel: 'Bangla', hijriDateLabel: 'Hijri', categoryTitle: 'Categories', learnMore: 'Learn More', welcome: 'Islamic Knowledge and Life Guidance' },
 };
 
 function Home() {

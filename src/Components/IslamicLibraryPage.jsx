@@ -28,10 +28,10 @@ const books = [
     },
     {
         id: 3,
-        title: "মা'আরিফুল হাদীস",
+        title: "সহীহ বুখারী (উর্দু অনুবাদ)",
         author: "মাওলানা আশরাফ আলী থানভী (রহ.)",
         description: "ছোট ছোট হাদীস ও তার ব্যাখ্যা নিয়ে রচিত অত্যন্ত জনপ্রিয় একটি বই।",
-        link: "/books/arf-ul-hadis.pdf",
+        link: "https://islamic-library-iota.vercel.app/pdfs/_islam_booksinpdf_Sahi-Bukhari-Urdu-1.pdf",
         category: "হাদীস",
     },
     {
@@ -117,8 +117,8 @@ export default function IslamicLibraryPage() {
 
     return (
         <RevealOnScroll>
-        <div className="min-h-screen bg-green-50 px-4 py-12 mt-20">
-            <h1 className="text-4xl font-bold text-center text-green-700 mb-8">📚 ইসলামিক লাইব্রেরি</h1>
+        <div className="min-h-screen px-4 py-12 mt-20 bg-green-50">
+            <h1 className="mb-8 text-4xl font-bold text-center text-green-700">📚 ইসলামিক লাইব্রেরি</h1>
 
             <div className="max-w-2xl mx-auto mb-6">
                 <input
@@ -133,7 +133,7 @@ export default function IslamicLibraryPage() {
                 />
             </div>
 
-            <div className="flex flex-wrap gap-2 justify-center mb-8">
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
                 {categories.map((cat, i) => (
                     <button
                         key={i}
@@ -151,10 +151,10 @@ export default function IslamicLibraryPage() {
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3">
                 {currentBooks.map((book) => (
-                    <div key={book.id} className="bg-white rounded-lg shadow hover:shadow-xl transition p-6 border border-green-100">
-                        <div className="flex justify-between items-start mb-2">
+                    <div key={book.id} className="p-6 transition bg-white border border-green-100 rounded-lg shadow hover:shadow-xl">
+                        <div className="flex items-start justify-between mb-2">
                             <h3 className="text-xl font-semibold text-green-700">{book.title}</h3>
                             <button
                                 onClick={() => toggleSave(book.id)}
@@ -164,13 +164,13 @@ export default function IslamicLibraryPage() {
                                 {savedBooks.includes(book.id) ? "✔️ সংরক্ষিত" : "📌 সংরক্ষণ করুন"}
                             </button>
                         </div>
-                        <p className="text-sm text-gray-600 mb-1">✍️ লেখক: {book.author}</p>
-                        <p className="text-sm text-gray-700 mb-4">{book.description}</p>
+                        <p className="mb-1 text-sm text-gray-600">✍️ লেখক: {book.author}</p>
+                        <p className="mb-4 text-sm text-gray-700">{book.description}</p>
                         <a
                             href={book.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded mb-2"
+                            className="inline-block px-4 py-2 mb-2 text-white bg-green-600 rounded hover:bg-green-700"
                         >
                             📖 বই পড়ুন
                         </a>
@@ -208,11 +208,11 @@ export default function IslamicLibraryPage() {
                                 value={tempComments[book.id] || ""}
                                 onChange={(e) => handleTempCommentChange(book.id, e.target.value)}
                                 placeholder="আপনার মন্তব্য লিখুন..."
-                                className="w-full border rounded p-2 mt-1"
+                                className="w-full p-2 mt-1 border rounded"
                             ></textarea>
                             <button
                                 onClick={() => saveComment(book.id)}
-                                className="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
+                                className="px-4 py-1 mt-2 text-white bg-green-500 rounded hover:bg-green-600"
                             >
                                 💾মন্তব্য প্রেরণ করুন
                             </button>
@@ -240,28 +240,28 @@ export default function IslamicLibraryPage() {
 
             {savedBooks.length > 0 && (
                 <div className="max-w-6xl mx-auto mt-12">
-                    <h2 className="text-2xl font-semibold text-green-700 mb-4 text-center">📌 সংরক্ষিত বইসমূহ</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <h2 className="mb-4 text-2xl font-semibold text-center text-green-700">📌 সংরক্ষিত বইসমূহ</h2>
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {books
                             .filter((book) => savedBooks.includes(book.id))
                             .map((book) => (
-                                <div key={book.id} className="bg-white rounded-lg shadow p-4 border border-green-100 relative">
+                                <div key={book.id} className="relative p-4 bg-white border border-green-100 rounded-lg shadow">
                                     <button
                                         onClick={() => toggleSave(book.id)}
-                                        className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 text-sm font-semibold shadow"
+                                        className="absolute px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded shadow top-3 right-3 hover:bg-red-600"
                                         title="মুছুন"
                                         aria-label="মুছুন"
                                     >
                                        ❌ মুছে ফেলুন
                                     </button>
-                                    <h3 className="text-lg font-bold text-green-700 mb-4">{book.title}</h3>
-                                    <p className="text-sm text-gray-600 mb-1">✍️ লেখক: {book.author}</p>
-                                    <p className="text-sm text-gray-700 mb-2">{book.description}</p>
+                                    <h3 className="mb-4 text-lg font-bold text-green-700">{book.title}</h3>
+                                    <p className="mb-1 text-sm text-gray-600">✍️ লেখক: {book.author}</p>
+                                    <p className="mb-2 text-sm text-gray-700">{book.description}</p>
                                     <a
                                         href={book.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+                                        className="inline-block px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
                                     >
                                         📖 বই পড়ুন
                                     </a>

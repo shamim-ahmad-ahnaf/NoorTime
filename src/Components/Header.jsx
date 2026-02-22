@@ -27,19 +27,19 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-green-950 shadow-lg z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="fixed top-0 left-0 z-50 w-full shadow-lg bg-green-950">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <h1
             onClick={handleTitleClick}
-            className="text-white text-3xl font-extrabold cursor-pointer select-none hover:text-green-300 transition"
+            className="text-3xl font-extrabold text-white transition cursor-pointer select-none hover:text-green-300"
             title="Go to Home"
           >
             DeenZone
           </h1>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-6 text-white font-medium text-sm">
+          <nav className="hidden space-x-6 text-sm font-medium text-white lg:flex">
             <Link to="/" className="hover:text-green-300">{language === 'bn' ? 'হোম' : 'Home'}</Link>
             <Link to="/prayer" className="hover:text-green-300">{language === 'bn' ? 'নামাজের সময়' : 'Prayer Times'}</Link>
             <Link to="/dua" className="hover:text-green-300">{language === 'bn' ? 'দোয়া' : 'Dua'}</Link>
@@ -50,10 +50,10 @@ function Header() {
 
 
           {/* Desktop Language Switch */}
-          <div className="hidden lg:flex items-center">
+          <div className="items-center hidden lg:flex">
             <button
               onClick={toggleLanguage}
-              className="flex items-center bg-white text-green-900 font-semibold px-4 py-1 rounded-md hover:bg-green-100 text-sm"
+              className="flex items-center px-4 py-1 text-sm font-semibold text-green-900 bg-white rounded-md cursor-pointer hover:bg-green-100"
             >
               <FaGlobe className="mr-2" />
               {language === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
@@ -61,16 +61,16 @@ function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center">
+          <div className="flex items-center lg:hidden">
             <button
               onClick={toggleLanguage}
-              className="mr-3 bg-white text-green-900 font-semibold px-3 py-1 rounded-md hover:bg-green-100 text-sm"
+              className="px-3 py-1 mr-3 text-sm font-semibold text-green-900 bg-white rounded-md cursor-pointer hover:bg-green-100"
             >
               {language === 'bn' ? 'EN' : 'বাংলা'}
             </button>
             <button
               onClick={toggleMenu}
-              className="text-white text-3xl"
+              className="text-3xl text-white cursor-pointer"
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             >
               {isMenuOpen ? <FaTimes /> : <FaBars />}
@@ -89,7 +89,7 @@ function Header() {
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               onClick={toggleMenu}
-              className="fixed inset-0 bg-black z-40"
+              className="fixed inset-0 z-40 bg-black"
             />
 
             <motion.nav
@@ -99,12 +99,12 @@ function Header() {
               animate="visible"
               exit="exit"
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 bottom-0 w-72 bg-green-900 text-white z-50 p-6 flex flex-col overflow-y-auto"
+              className="fixed top-0 bottom-0 right-0 z-50 flex flex-col p-6 overflow-y-auto text-white bg-green-900 w-72"
             >
               <button
                 onClick={toggleMenu}
                 aria-label="Close menu"
-                className="self-end text-white text-3xl mb-4 hover:text-green-300"
+                className="self-end mb-4 text-3xl text-white hover:text-green-300"
               >
                 <FaTimes />
               </button>
@@ -139,22 +139,22 @@ function Header() {
                   <input
                     type="search"
                     placeholder={language === 'bn' ? 'অনুসন্ধান করুন...' : 'Search...'}
-                    className="w-full px-3 py-2 text-sm rounded-md text-green-900"
+                    className="w-full px-3 py-2 text-sm text-green-900 rounded-md"
                   />
-                  <button type="submit" className="absolute right-3 top-2 text-green-700">
+                  <button type="submit" className="absolute text-green-700 right-3 top-2">
                     <FaSearch />
                   </button>
                 </div>
               </form>
 
               {/* Social Icons */}
-              <div className="mt-6 flex justify-center gap-4 text-xl text-green-300">
+              <div className="flex justify-center gap-4 mt-6 text-xl text-green-300">
                 <a
                   href="https://wa.me/8801748186766"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="WhatsApp"
-                  className="hover:text-gray-300 transition-transform transform hover:scale-110"
+                  className="transition-transform transform hover:text-gray-300 hover:scale-110"
                 >
                   <FaWhatsapp />
                 </a>
@@ -163,14 +163,14 @@ function Header() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Facebook"
-                  className="hover:text-gray-300 transition-transform transform hover:scale-110"
+                  className="transition-transform transform hover:text-gray-300 hover:scale-110"
                 >
                   <FaFacebook />
                 </a>
                 <a
                   href="mailto:shamimahmadahnaf@gmail.com"
                   aria-label="Email"
-                  className="hover:text-gray-300 transition-transform transform hover:scale-110"
+                  className="transition-transform transform hover:text-gray-300 hover:scale-110"
                 >
                   <FaEnvelope />
                 </a>
@@ -180,7 +180,7 @@ function Header() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub"
-                  className="hover:text-gray-300 transition-transform transform hover:scale-110"
+                  className="transition-transform transform hover:text-gray-300 hover:scale-110"
                 >
                   <FaGithub />
                 </a>
@@ -189,7 +189,7 @@ function Header() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn"
-                  className="hover:text-gray-300 transition-transform transform hover:scale-110"
+                  className="transition-transform transform hover:text-gray-300 hover:scale-110"
                 >
                   <FaLinkedin />
                 </a>
@@ -201,7 +201,7 @@ function Header() {
                   toggleLanguage();
                   toggleMenu();
                 }}
-                className="mt-6 bg-white text-green-900 font-semibold px-4 py-2 rounded-md hover:bg-green-100 transition text-sm"
+                className="px-4 py-2 mt-6 text-sm font-semibold text-green-900 transition bg-white rounded-md cursor-pointer hover:bg-green-100"
               >
                 {language === 'bn' ? 'Switch to English' : 'বাংলায় দেখুন'}
               </button>

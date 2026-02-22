@@ -641,7 +641,7 @@ function DuaSection() {
       <ToastContainer />
 
       <motion.h2
-        className="mb-8 text-3xl font-bold text-center text-green-600"
+        className="mb-8 text-5xl font-bold text-center text-green-600"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2 }}
